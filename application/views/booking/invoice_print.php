@@ -31,9 +31,9 @@
       <div class="col-sm-4 invoice-col">
         Dari
         <address>
-          <strong><?= 'E-commerce - '.$record->workshop_name ?></strong><br>
-          <?= $record->workshop_address.', '.$record->workshop_postal_code ?><br>
-          Phone: <?= $record->workshop_phone ?><br>
+          <strong><?= 'E-commerce - '.$record->shop_name ?></strong><br>
+          <?= $record->shop_address.', '.$record->shop_postal_code ?><br>
+          Phone: <?= $record->shop_phone ?><br>
         </address>
       </div>
       <!-- /.col -->

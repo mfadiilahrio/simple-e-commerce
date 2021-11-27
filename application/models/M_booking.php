@@ -10,21 +10,19 @@ class M_booking extends CI_Model {
 			u.phone as user_phone,
 			auth.email as user_email,
 			services.name as service_name,
-			workshops.name as workshop_name,
-			workshops.phone as workshop_phone,
-			workshops.address as workshop_address,
-			workshops.postal_code as workshop_postal_code,
+			shops.name as shop_name,
+			shops.phone as shop_phone,
+			shops.address as shop_address,
+			shops.postal_code as shop_postal_code,
 			areas.name as area_name,
-			m.name as mechanic_name,
 			banks.name as bank_name,
 			bank_accounts.account_number,
 			(SELECT SUM(booking_items.price * booking_items.qty) FROM booking_items WHERE booking_items.booking_id = bookings.id) + bookings.other_cost as total');
 		$this->db->join('users u', 'u.id = bookings.user_id', 'left');
 		$this->db->join('auth', 'auth.user_id = u.id', 'left');
 		$this->db->join('services', 'services.id = bookings.service_id', 'left');
-		$this->db->join('workshops', 'workshops.id = bookings.workshop_id', 'left');
+		$this->db->join('shops', 'shops.id = bookings.shop_id', 'left');
 		$this->db->join('areas', 'areas.id = bookings.area_id', 'left');
-		$this->db->join('users m', 'm.id = bookings.mechanic_id', 'left');
 		$this->db->join('bank_accounts', 'bank_accounts.id = bookings.bank_account_id', 'left');
 		$this->db->join('banks', 'banks.id = bank_accounts.bank_id', 'left');
 		$this->db->order_by('bookings.id', 'desc');
@@ -41,21 +39,19 @@ class M_booking extends CI_Model {
 			u.phone as user_phone,
 			auth.email as user_email,
 			services.name as service_name,
-			workshops.name as workshop_name,
-			workshops.phone as workshop_phone,
-			workshops.address as workshop_address,
-			workshops.postal_code as workshop_postal_code,
+			shops.name as shop_name,
+			shops.phone as shop_phone,
+			shops.address as shop_address,
+			shops.postal_code as shop_postal_code,
 			areas.name as area_name,
-			m.name as mechanic_name,
 			banks.name as bank_name,
 			bank_accounts.account_number,
 			(SELECT SUM(booking_items.price * booking_items.qty) FROM booking_items WHERE booking_items.booking_id = bookings.id) + bookings.other_cost as total');
 		$this->db->join('users u', 'u.id = bookings.user_id', 'left');
 		$this->db->join('auth', 'auth.user_id = u.id', 'left');
 		$this->db->join('services', 'services.id = bookings.service_id', 'left');
-		$this->db->join('workshops', 'workshops.id = bookings.workshop_id', 'left');
+		$this->db->join('shops', 'shops.id = bookings.shop_id', 'left');
 		$this->db->join('areas', 'areas.id = bookings.area_id', 'left');
-		$this->db->join('users m', 'm.id = bookings.mechanic_id', 'left');
 		$this->db->join('bank_accounts', 'bank_accounts.id = bookings.bank_account_id', 'left');
 		$this->db->join('banks', 'banks.id = bank_accounts.bank_id', 'left');
 		$this->db->order_by("bookings.created_at", "desc");

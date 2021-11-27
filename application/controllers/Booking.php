@@ -13,7 +13,7 @@ class Booking extends CI_Controller {
 		$this->load->model('m_booking');
 		$this->load->model('m_cart');
 		$this->load->model('m_item');
-		$this->load->model('m_workshop');
+		$this->load->model('m_shop');
 		$this->load->model('m_user');
 		$this->load->model('m_bankaccount');
 		$this->timeStamp = date('Y-m-d H:i:s', time());
@@ -32,8 +32,7 @@ class Booking extends CI_Controller {
 			$data['bank_accounts'] = $this->m_bankaccount->getBankAccounts(array());
 			$data['record'] = $this->m_booking->getBooking(array('bookings.id' => $id));
 			$data['records'] = $this->m_booking->getBookingItems($id);
-			$data['workshops'] = $this->m_workshop->getWorkshops();
-			$data['mechanics'] = $this->m_user->getMechanics();
+			$data['shops'] = $this->m_shop->getShops();
 
 			$subtotal = 0;
 
@@ -47,8 +46,6 @@ class Booking extends CI_Controller {
 		} else {
 			if ($this->session->userdata('user_type') == 'customer') {
 				$where['bookings.user_id'] = $this->session->userdata('user_id');
-			} else if($this->session->userdata('user_type') == 'mechanic') {
-				$where['bookings.mechanic_id'] = $this->session->userdata('user_id');
 			} else {
 				$where = array();
 			}
@@ -159,8 +156,7 @@ class Booking extends CI_Controller {
 			$id = $this->input->post('id');
 			$type = $this->input->post('type');
 			$booking_status = $this->input->post('booking_status');
-			$workshop_id = $this->input->post('workshop_id');
-			$mechanic_id = $this->input->post('mechanic_id');
+			$shop_id = $this->input->post('shop_id');
 			$other_cost = $this->input->post('other_cost');
 			$other_cost_note = $this->input->post('other_cost_note');
 			$awb_number = $this->input->post('awb_number');
@@ -171,12 +167,11 @@ class Booking extends CI_Controller {
 			} else {
 				if ($booking_status == 'confirmed') {
 					if ($type == 'booking') {
-						if ($workshop_id == null || $mechanic_id == null) {
+						if ($shop_id == null) {
 							echo json_encode(array('error' => 'Error saat mengupdate status pesanan'));
 						} else {
 							$data = array(
-								'workshop_id' => $workshop_id,
-								'mechanic_id' => $mechanic_id,
+								'shop_id' => $shop_id,
 								'booking_status' => $booking_status
 							);
 						}
@@ -203,7 +198,7 @@ class Booking extends CI_Controller {
 					);
 				} else if ($booking_status == 'shipped') {
 					$data = array(
-						'workshop_id' => $workshop_id,
+						'shop_id' => $shop_id,
 						'booking_status' => $booking_status,
 						'awb_number' => $awb_number
 					);
@@ -263,35 +258,6 @@ class Booking extends CI_Controller {
 			} else {
 				$data = array(
 					'booking_status' => $booking_status
-				);
-
-				if ($this->m_base->updateData('bookings', $data, 'id', $id)) {
-					echo json_encode(array('message' => 'Pesanan berhasil diupdate'));
-				} else {
-					echo json_encode(array('error' => 'Error saat mengupdate status pesanan'));
-				}
-			}
-		} else {
-			echo json_encode(array('error' => 'Akses ditolak'));
-		}
-	}
-
-	public function mechanicupdatebookingstatus()
-	{
-		if ($this->session->userdata('user_type') == 'mechanic' || $this->session->userdata('user_type') == 'admin') {
-			$user_id = $this->session->userdata('user_id');
-			$id = $this->input->post('id');
-			$booking_status = $this->input->post('booking_status');
-			$other_cost = $this->input->post('other_cost');
-			$other_cost_note = $this->input->post('other_cost_note');
-
-			if ($user_id == null || !($booking_status == 'process' || $booking_status == 'waiting_payment')) {
-				echo json_encode(array('error' => 'Error saat mengupdate status pesanan'));
-			} else {
-				$data = array(
-					'booking_status' => $booking_status,
-					'other_cost' => $other_cost,
-					'other_cost_note' => $other_cost_note
 				);
 
 				if ($this->m_base->updateData('bookings', $data, 'id', $id)) {

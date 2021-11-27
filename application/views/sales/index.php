@@ -88,7 +88,6 @@
                         <th>Tipe</th>
                         <th>Customer</th>
                         <th>Area</th>
-                        <th>Mekanik</th>
                         <th>Keluhan</th>
                         <th>Tanggal</th>
                         <th>Biaya Tambahan</th>
@@ -117,7 +116,6 @@
                           <td><span class="badge badge-<?= ($record->type == 'booking') ? 'success' : 'secondary' ?>"><?= ($record->type == 'booking') ? 'Servis' : 'Belanja' ?></span></td>
                           <td><?= $record->user_name ?></td>
                           <td><?= $record->area_name ?></td>
-                          <td><?= $record->mechanic_name ?></td>
                           <td class="text-truncate" style="max-width: 150px;"><?= $record->complaint ?></td>
                           <td><?= $record->date ?></td>
                           <td><?= "Rp " . number_format($record->other_cost, 0, ",", ".") ?></td>

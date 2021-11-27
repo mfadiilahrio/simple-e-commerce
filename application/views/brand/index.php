@@ -26,7 +26,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <a href="<?= base_url("mechanic/edit") ?>" class="btn btn-app bg-success">
+          <a href="<?= base_url("brand/edit") ?>" class="btn btn-app bg-success">
             <i class="fas fa-plus"></i> Tambah
           </a>
         </div>
@@ -43,17 +43,15 @@
                   <tr>
                     <th>No</th>
                     <th>ID</th>
-                    <th>Email</th>
-                    <th>Name</th>
+                    <th>Merek</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php $no = 1; ?>
                     <?php foreach ($records as $record) { ?>
-                      <tr class="clickable-row" onclick="window.location='<?= base_url("mechanic/edit?id=$record->auth_id") ?>'" class="clickable-row">
+                      <tr class="clickable-row" onclick="window.location='<?= base_url("brand/edit?id=$record->id") ?>'" class="clickable-row">
                         <td><?= $no; ?></td>
                         <td><?= $record->id ?></td>
-                        <td><?= $record->email ?></td>
                         <td><?= $record->name ?></td>
                       </tr>
                       <?php $no++; } ?>

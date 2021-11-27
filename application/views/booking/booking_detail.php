@@ -60,11 +60,6 @@
                 </div>
               </row>
               <?php endif ?>
-              <?php if($this->session->userdata('user_type') == 'mechanic' && ($record->next_booking_status == 'process' || $record->next_booking_status == 'waiting_payment')): ?>
-                <button type="button" id="update-booking-status" class="btn btn-outline-success btn-sm">
-                  <?= $record->next_booking_status_name ?>
-                </button>
-              <?php endif ?>
               <?php if($this->session->userdata('user_type') == 'customer' && $record->booking_status == 'shipped'): ?>
                 <button type="button" id="update-booking-status" class="btn btn-outline-success btn-sm">
                   <?= $record->next_booking_status_name ?>
@@ -88,9 +83,9 @@
                 <div class="col-sm-4 invoice-col">
                   Dari
                   <address>
-                    <strong><?= 'E-commerce - '.$record->workshop_name ?></strong><br>
-                    <?= $record->workshop_address.', '.$record->workshop_postal_code ?><br>
-                    Phone: <?= $record->workshop_phone ?><br>
+                    <strong><?= 'E-commerce - '.$record->shop_name ?></strong><br>
+                    <?= $record->shop_address.', '.$record->shop_postal_code ?><br>
+                    Phone: <?= $record->shop_phone ?><br>
                   </address>
                 </div>
                 <!-- /.col -->
@@ -258,21 +253,11 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label>Pilih Bengkel</label>
-                    <select name="workshop_id" id="workshop_id" class="form-control select2bs4" style="width: 100%;" required>
+                    <label>Pilih Toko</label>
+                    <select name="shop_id" id="shop_id" class="form-control select2bs4" style="width: 100%;" required>
                       <?php 
-                      foreach ($workshops as $workshop) {
-                        echo '<option value="'.$workshop->id.'">'.$workshop->name.' - '.$workshop->area_name.'</option>';
-                      }
-                      ?>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label>Mekanik</label>
-                    <select name="mechanic_id" id="mechanic_id" class="form-control select2bs4" style="width: 100%;" required>
-                      <?php 
-                      foreach ($mechanics as $mechanic) {
-                        echo '<option value="'.$mechanic->id.'">'.$mechanic->name.'</option>';
+                      foreach ($shops as $shop) {
+                        echo '<option value="'.$shop->id.'">'.$shop->name.' - '.$shop->area_name.'</option>';
                       }
                       ?>
                     </select>
@@ -303,11 +288,11 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label>Pilih Bengkel Pengirim</label>
-                    <select name="workshop_id" id="workshop_id" class="form-control select2bs4" style="width: 100%;" required>
+                    <label>Pilih Toko Pengirim</label>
+                    <select name="shop_id" id="shop_id" class="form-control select2bs4" style="width: 100%;" required>
                       <?php 
-                      foreach ($workshops as $workshop) {
-                        echo '<option value="'.$workshop->id.'">'.$workshop->name.' - '.$workshop->area_name.'</option>';
+                      foreach ($shops as $shop) {
+                        echo '<option value="'.$shop->id.'">'.$shop->name.' - '.$shop->area_name.'</option>';
                       }
                       ?>
                     </select>
@@ -407,8 +392,6 @@
         $url = 'booking/customerupdatebookingstatus';
       } else if ($user_type =='admin') {
         $url = 'booking/adminupdatebookingstatus';
-      } else {
-        $url = 'booking/mechanicupdatebookingstatus';
       }
       ?>
 
@@ -445,7 +428,7 @@
           'id':<?= $record->id ?>,
           'type':"<?= $record->type ?>",
           'booking_status': 'shipped',
-          'workshop_id': $("#workshop_id").val(),
+          'shop_id': $("#shop_id").val(),
           'awb_number': $("#awb_number").val()
         }
 
@@ -457,8 +440,7 @@
           'id':<?= $record->id ?>,
           'type':"<?= $record->type ?>",
           'booking_status': 'confirmed',
-          'workshop_id': $("#workshop_id").val(),
-          'mechanic_id': $("#mechanic_id").val()
+          'shop_id': $("#shop_id").val()
         }
 
         updateBookingStatus(data);

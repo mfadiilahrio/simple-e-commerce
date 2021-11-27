@@ -264,23 +264,6 @@
           </li>
           <li class="nav-item main-nav">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                Mekanik
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?= base_url("mechanic") ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Data Mekanik</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item main-nav">
-            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-boxes"></i>
               <p>
                 Barang / Produk
@@ -289,9 +272,17 @@
             </a>
             <ul class="nav nav-treeview" hidden>
               <li class="nav-item">
-                <a href="<?= base_url("workshop") ?>" class="nav-link">
+                <a href="<?= base_url("shop") ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Data Bengkel</p>
+                  <p>Data Toko</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url("brand") ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Data Merek</p>
                 </a>
               </li>
             </ul>
