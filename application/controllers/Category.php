@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Brandtype extends CI_Controller {
+class Category extends CI_Controller {
 
-	var $page_name = "Tipe Merek"; 
+	var $page_name = "Kategori"; 
 
 	public function __construct()
 	{
@@ -11,7 +11,6 @@ class Brandtype extends CI_Controller {
 
 		$this->load->model('m_base');
 		$this->load->model('m_cart');
-		$this->load->model('m_brandtype');
 		$this->timeStamp = date("Y-m-d H:i:s", time());
 	}
 
@@ -20,11 +19,11 @@ class Brandtype extends CI_Controller {
 		$data['success'] = $this->session->flashdata('success');
 		$data['error'] = $this->session->flashdata('error');
 
-		$data['records'] = $this->m_brandtype->getbrandtypes();
+		$data['records'] = $this->m_base->getListWhere('categories', array('status' => true));
 
 		$data['page_name'] = $this->page_name;
 		$this->header();
-		$this->load->view('brandtype/index', $data);
+		$this->load->view('category/index', $data);
 		$this->footer();
 	}
 
@@ -37,45 +36,38 @@ class Brandtype extends CI_Controller {
 		if ($id == '') {
 			$data['record'] = '';
 		} else {
-			$data['record'] = $this->m_brandtype->getbrandtype($id);
+			$data['record'] = $this->m_base->getWhere('categories', array('id' => $id));
 		}
-
-		$data['brands'] = $this->m_base->getListWhere('brands', array(), 'asc');
 
 		$data['page_name'] = $this->page_name;
 		$this->header();
-		$this->load->view('brandtype/edit', $data);
+		$this->load->view('category/edit', $data);
 		$this->footer();
 	}
 
 	public function update()
 	{
 		$id = $this->input->post('id');
-		$brand_id = $this->input->post('brand_id');
 
 		$data = array(
 			'name' => $this->input->post('name')
 		);
 
 		if ($id == '') {
-			if ($id == null) {
-				$data['brand_id'] = $brand_id;
-			}
-
-			if ($this->m_base->createData('brand_types', $data, 'id', $id)) {
+			if ($this->m_base->createData('categories', $data, 'id', $id)) {
 				$this->session->set_flashdata('success', 'Data berhasil ditambahkan');
 			} else {
 				$this->session->set_flashdata('error', 'Data gagal ditambahkan');
 			}
 		} else {
-			if ($this->m_base->updateData('brand_types', $data, 'id', $id)) {
+			if ($this->m_base->updateData('categories', $data, 'id', $id)) {
 				$this->session->set_flashdata('success', 'Data berhasil diubah');
 			} else {
 				$this->session->set_flashdata('error', 'Data gagal diubah');
 			}
 		}
 
-		redirect('brandtype','refresh');
+		redirect('category','refresh');
 	}
 
 	public function delete()
@@ -86,11 +78,11 @@ class Brandtype extends CI_Controller {
 			'status' => false
 		);
 
-		if ($this->m_base->updateData('brand_types', $data, 'id', $id)) {
-			$this->session->set_flashdata('success', 'Tipe berhasil dihapus');
-			echo json_encode(array('message' => 'Tipe berhasil dihapus'));
+		if ($this->m_base->updateData('categories', $data, 'id', $id)) {
+			$this->session->set_flashdata('success', 'Kategori berhasil dihapus');
+			echo json_encode(array('message' => 'Kategori berhasil dihapus'));
 		} else {
-			$this->session->set_flashdata('error', 'Tipe gagal dihapus');
+			$this->session->set_flashdata('error', 'Kategori gagal dihapus');
 			echo json_encode(array('error' => 'Error saat menghapus tipe'));
 		}
 	}
@@ -116,5 +108,5 @@ class Brandtype extends CI_Controller {
 
 }
 
-/* End of file Brandtype.php */
-/* Location: ./application/controllers/Brandtype.php */
+/* End of file Categorytype.php */
+/* Location: ./application/controllers/Categorytype.php */

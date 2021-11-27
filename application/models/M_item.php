@@ -6,10 +6,10 @@ class M_item extends CI_Model {
 	function getitems() {
 		$this->db->select('
 			items.*,
-			brand_types.name as brand_type_name,
-			brands.name as brand_name');
-		$this->db->join('brand_types', 'brand_types.id = items.brand_type_id', 'left');
-		$this->db->join('brands', 'brands.id = brand_types.brand_id', 'left');
+			brands.name as brand_name,
+			categories.name as category_name');
+		$this->db->join('brands', 'brands.id = items.brand_id', 'left');
+		$this->db->join('categories', 'categories.id = items.category_id', 'left');
 		$this->db->where('items.status', true);
 		$this->db->order_by('id', 'desc');
 
@@ -19,11 +19,11 @@ class M_item extends CI_Model {
 	function getitem($where) {
 		$this->db->select('
 			items.*,
-			brand_types.name as brand_type_name,
 			brands.id as brand_id,
-			brands.name as brand_name');
-		$this->db->join('brand_types', 'brand_types.id = items.brand_type_id', 'left');
-		$this->db->join('brands', 'brands.id = brand_types.brand_id', 'left');
+			brands.name as brand_name,
+			categories.name as category_name');
+		$this->db->join('brands', 'brands.id = items.brand_id', 'left');
+		$this->db->join('categories', 'categories.id = items.category_id', 'left');
 
 		return $this->db->get_where('items', $where)->row();
 	}

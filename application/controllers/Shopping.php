@@ -20,7 +20,7 @@ class Shopping extends CI_Controller {
 		$data['success'] = $this->session->flashdata('success');
 		$data['error'] = $this->session->flashdata('error');
 
-		$data['brands'] = $this->m_base->getListWhere('brands', array(), 'asc');
+		$data['categories'] = $this->m_base->getListWhere('categories', array(), 'asc');
 
 		$data['page_name'] = $this->page_name;
 		$this->header();
@@ -42,23 +42,29 @@ class Shopping extends CI_Controller {
 
 	public function getitemsbybrandtypeid()
 	{
-		$items = $this->m_base->getListWhere(
-			'items',
-			array(
-				'brand_type_id' => $this->input->get('brand_type_id')
-			)
-		);
+		$type = $this->input->get('brand_type_id');
 
-		$common_items = $this->m_base->getListWhere(
-			'items',
-			array(
-				'brand_type_id' => NULL
-			)
-		);
+		if ($type != null) {
+			$items = $this->m_base->getListWhere(
+				'items',
+				array(
+					'brand_type_id' => $this->input->get('brand_type_id')
+				)
+			);
 
-		$merged_items = array_merge($items, $common_items);
+			$common_items = $this->m_base->getListWhere(
+				'items',
+				array(
+					'brand_type_id' => NULL
+				)
+			);
 
-		echo json_encode($merged_items);
+			$result = array_merge($items, $common_items);
+		} else {
+			$result = $this->m_base->getListWhere('items', array());
+		}
+
+		echo json_encode($result);
 	}
 
 	public function header()

@@ -46,7 +46,7 @@ class Product extends CI_Controller {
 		}
 
 		$data['brands'] = $this->m_base->getListWhere('brands', array(), 'asc');
-		$data['brand_types'] = $this->m_base->getListWhere('brand_types', array(), 'asc');
+		$data['categories'] = $this->m_base->getListWhere('categories', array(), 'asc');
 
 		$data['page_name'] = $this->page_name;
 		$this->header();
@@ -57,25 +57,29 @@ class Product extends CI_Controller {
 	public function update()
 	{
 		$id = $this->input->post('id');
-		$brand_type_id = $this->input->post('brand_type_id');
+		$brand_id = $this->input->post('brand_id');
+		$category_id = $this->input->post('category_id');
 		$name = $this->input->post('name');
+		$description = $this->input->post('description');
 		$price = $this->input->post('price');
 		$qty = $this->input->post('qty');
 		
 		$this->form_validation->set_rules('name', 'Nama', 'required');
+		$this->form_validation->set_rules('description', 'Deskripsi', 'required');
+		$this->form_validation->set_rules('brand_id', 'Merek', 'numeric|required');
+		$this->form_validation->set_rules('category_id', 'Kategori', 'numeric|required');
 		$this->form_validation->set_rules('price', 'Harga', 'required');
 		$this->form_validation->set_rules('qty', 'Qty', 'required');
 
 		if($this->form_validation->run()) {
 			$data = array(
 				'name' => $name,
+				'description' => $description,
+				'brand_id' => $brand_id,
+				'category_id' => $category_id,
 				'price' => $price,
 				'qty' => $qty
 			);
-
-			if (is_numeric($brand_type_id)) {
-				$data['brand_type_id'] = $brand_type_id;
-			}
 
 			if ($id == '') {
 				if ($item_id = $this->m_base->createDataWithInsertID('items', $data)) {

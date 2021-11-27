@@ -40,34 +40,14 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <div class="card card-info">
-              <div class="card-header">
-                <h3 class="card-title">Alamat</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <p>
-                  <?= $this->session->userdata("address") ?>
-                </p>
-              </div>
-              <div class="card-footer">
-                <span class="text text-info"><i class="fas fa-info"></i> Alamat dapat diubah saat halaman checkout</span>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-3">
                 <div class="form-group">
-                  <label>Merek</label>
+                  <label>Kategori</label>
                   <select name="brand_id" id="brand_id" class="form-control select2bs4" style="width: 100%;" required>
-                    <option>--Pilih Merek--</option>
+                    <option>--Pilih Kategori--</option>
                     <?php 
-                    foreach ($brands as $data) {
+                    foreach ($categories as $data) {
                       echo '<option value="'.$data->id.'">'.$data->name.'</option>';
                     }
                     ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2021 at 09:15 AM
+-- Generation Time: Nov 27, 2021 at 04:50 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -135,13 +135,6 @@ CREATE TABLE `bookings` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `bookings`
---
-
-INSERT INTO `bookings` (`id`, `user_id`, `service_id`, `shop_id`, `area_id`, `type`, `complaint`, `date`, `address`, `phone`, `postal_code`, `other_cost`, `other_cost_note`, `booking_status`, `bank_account_id`, `awb_number`, `payment_url`, `created_at`) VALUES
-(6, 11, 1, 1, 5, 'shopping', NULL, '2021-11-27 15:10:04', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 0, NULL, 'completed', 2, 'PYMNT- 2711-2021', 'assets/images/payments/payment_6.png', '2021-11-27 08:10:04');
-
 -- --------------------------------------------------------
 
 --
@@ -155,13 +148,6 @@ CREATE TABLE `booking_items` (
   `price` bigint(20) NOT NULL,
   `qty` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `booking_items`
---
-
-INSERT INTO `booking_items` (`id`, `booking_id`, `item_id`, `price`, `qty`) VALUES
-(4, 6, 18, 38000, 105);
 
 -- --------------------------------------------------------
 
@@ -180,27 +166,7 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `name`, `status`) VALUES
-(36, 'Champ', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `brand_types`
---
-
-CREATE TABLE `brand_types` (
-  `id` int(11) NOT NULL,
-  `brand_id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `brand_types`
---
-
-INSERT INTO `brand_types` (`id`, `brand_id`, `name`, `status`) VALUES
-(5, 36, 'Chicken', 1);
+(1, 'Champ', 1);
 
 -- --------------------------------------------------------
 
@@ -245,13 +211,34 @@ INSERT INTO `cart_items` (`id`, `cart_id`, `item_id`, `qty`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `status`) VALUES
+(1, 'Ayam', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `items`
 --
 
 CREATE TABLE `items` (
   `id` int(11) NOT NULL,
-  `brand_type_id` int(11) DEFAULT NULL,
+  `brand_id` int(11) DEFAULT NULL,
+  `category_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
   `price` bigint(20) NOT NULL,
   `image_url` varchar(255) DEFAULT NULL,
   `qty` int(11) NOT NULL,
@@ -262,8 +249,8 @@ CREATE TABLE `items` (
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`id`, `brand_type_id`, `name`, `price`, `image_url`, `qty`, `status`) VALUES
-(18, 5, 'Chicken Nugget', 38000, 'assets/images/items/item_18.png', -5, 1);
+INSERT INTO `items` (`id`, `brand_id`, `category_id`, `name`, `description`, `price`, `image_url`, `qty`, `status`) VALUES
+(19, 1, 1, 'Chicken Nugget', 'Champ chicken nugget 500gram. Produk ready, baru dan fresh setiap hari. Order dan jadwal pengiriman :\r\n- Order masuk pukul 18.00wib sd pukul 05.00wib. Paket akan dikirim dihari yang sama. Start pengiriman pukul 08.00wib\r\n- Order masuk pukul 06.00wib sd pukul 17.00wib. Paket akan dikirim ke esokan harinya Start pengiriman mulai pukul 08.00wib\r\n- Pengiriman setiap hari ( Senin - Minggu ) kecuali Toko tutup/ libur', 15000, 'assets/images/items/item_19.png', 100, 1);
 
 -- --------------------------------------------------------
 
@@ -380,12 +367,6 @@ ALTER TABLE `brands`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `brand_types`
---
-ALTER TABLE `brand_types`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `carts`
 --
 ALTER TABLE `carts`
@@ -395,6 +376,12 @@ ALTER TABLE `carts`
 -- Indexes for table `cart_items`
 --
 ALTER TABLE `cart_items`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -465,13 +452,7 @@ ALTER TABLE `booking_items`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-
---
--- AUTO_INCREMENT for table `brand_types`
---
-ALTER TABLE `brand_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `carts`
@@ -486,10 +467,16 @@ ALTER TABLE `cart_items`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `services`

@@ -209,7 +209,7 @@
                with font-awesome or any other icon font library -->
           <?php if ($this->session->userdata('user_type') == 'customer') : ?>
           <li class="nav-item main-nav">
-            <a href="<?= base_url("home") ?>" class="nav-link">
+            <a href="<?= base_url("shopping") ?>" class="nav-link">
               <i class="nav-icon fa fa-home"></i>
               <p>
                 Beranda
@@ -288,9 +288,9 @@
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url("brandtype") ?>" class="nav-link">
+                <a href="<?= base_url("category") ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Data Tipe Merek</p>
+                  <p>Data Kategori</p>
                 </a>
               </li>
             </ul>

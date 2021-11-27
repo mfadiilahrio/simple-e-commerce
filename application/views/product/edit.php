@@ -1,9 +1,10 @@
   <?php
   $action = ($record != null) ? "Ubah" : "Tambah";
   $id = (isset($record->id)) ? $record->id : '';
-  $brand_type_id = (isset($record->brand_type_id)) ? $record->brand_type_id : '';
+  $category_id = (isset($record->category_id)) ? $record->category_id : '';
   $brand_id = (isset($record->brand_id)) ? $record->brand_id : '';
   $name = (isset($record->name)) ? $record->name : '';
+  $description = (isset($record->description)) ? $record->description : '';
   $price = (isset($record->price)) ? $record->price : '';
   $qty = (isset($record->qty)) ? $record->qty : '';
   $image_url = (isset($record->image_url)) ? $record->image_url : '';
@@ -60,7 +61,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Merek</label>
-                    <select name="brand_id" id="brand_id" class="form-control select2bs4" style="width: 100%;" <?= ($record != null) ? 'disabled' : '' ?>>
+                    <select name="brand_id" id="brand_id" class="form-control select2bs4" style="width: 100%;">
                       <option>--Pilih Merek--</option>
                       <?php 
                       foreach ($brands as $data) {
@@ -72,17 +73,15 @@
                     <input type="hidden" name="id" class="form-control" value="<?= $id ?>">
                   </div>
                   <div class="form-group">
-                    <label>Tipe</label>
-                    <select name="brand_type_id" id="brand_type_id" class="form-control select2bs4" style="width: 100%;" <?= ($record != null) ? 'disabled' : '' ?>>
-                      <?php if($record != null) : ?>
-                      <option>--Pilih Tipe--</option>
+                    <label>Kategori</label>
+                    <select name="category_id" id="category_id" class="form-control select2bs4" style="width: 100%;">
+                      <option>--Pilih Kategori--</option>
                       <?php 
-                      foreach ($brand_types as $data) {
-                        $selected = ($data->id == $brand_type_id) ? 'selected' : '';
+                      foreach ($categories as $data) {
+                        $selected = ($data->id == $brand_id) ? 'selected' : '';
                         echo '<option value="'.$data->id.'" '.$selected.'>'.$data->name.'</option>';
                       }
                       ?>
-                      <?php endif ?>
                     </select>
                   </div>
                   <div class="form-group">
@@ -101,6 +100,10 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-md-6">  
+                  <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea type="text" class="form-control" name="description" placeholder="Tuliskan deskripsi produk" required><?= $description; ?></textarea>
+                  </div>
                   <div class="form-group">
                     <div class="img-square-wrapper">
                       <img src="<?= ($image_url != null) ? base_url("$image_url") : base_url("assets/images/image_placeholder.png") ?>" class="card-img-top" style="width: 120px;object-fit: contain;" alt="<?= base_url("$image_url") ?>">
@@ -152,34 +155,4 @@
         }
       });
     }
-
-    $(document).ready(function() {
-      $('#brand_id').change(function(e) {
-
-        $('#brand_type_id').empty();
-
-        var data = {
-          'brand_id':$('#brand_id').val()
-        }
-
-        $.LoadingOverlay("show");
-
-        $.ajax({
-          type: 'GET',
-          url: "<?php echo base_url("bookingservice/getbrandtypebybrandid")?>",
-          data: data,
-          dataType: "json",
-          success: function(resultData) { 
-            $.LoadingOverlay("hide");
-
-            var toAppend = '';
-            toAppend += '<option>--Pilih Tipe</option>';
-            $.each(resultData,function(i,o){
-              toAppend += '<option value="'+o.id+'">'+o.name+'</option>';
-            });
-            $('#brand_type_id').append(toAppend);
-          }
-        });
-      });      
-    });
   </script>

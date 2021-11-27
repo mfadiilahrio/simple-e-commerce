@@ -1,7 +1,6 @@
   <?php
   $action = ($record != null) ? "Ubah" : "Tambah";
   $id = (isset($record->id)) ? $record->id : '';
-  $brand_id = (isset($record->brand_id)) ? $record->brand_id : '';
   $name = (isset($record->name)) ? $record->name : '';
   ?>
 
@@ -51,21 +50,9 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <form action="<?= base_url("brandtype/update") ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?= base_url("category/update") ?>" method="POST" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Merek</label>
-                    <select name="brand_id" id="brand_id" class="form-control select2bs4" style="width: 100%;" <?= ($record != null) ? 'disabled' : '' ?> >
-                      <?php 
-                      foreach ($brands as $data) {
-                        $selected = ($data->id == $brand_id) ? 'selected' : '';
-                        echo '<option value="'.$data->id.'" '.$selected.'>'.$data->name.'</option>';
-                      }
-                      ?>
-                    </select>
-                    <input type="hidden" name="id" class="form-control" value="<?= $id ?>">
-                  </div>
                   <div class="form-group">
                     <label>Nama</label>
                     <input type="text" class="form-control" name="name" placeholder="Nama" value="<?= $name; ?>" required>
@@ -106,14 +93,14 @@
 
       $.ajax({
         type: 'POST',
-        url: "<?php echo base_url("brandtype/delete")?>",
+        url: "<?php echo base_url("category/delete")?>",
         data: data,
         dataType: "json",
         success: function(resultData) {
           if (resultData.error != null) {
             window.alert(resultData.error);
           } else {
-            window.location.href = "<?= base_url("brandtype") ?>";
+            window.location.href = "<?= base_url("category") ?>";
           }  
         }
       });

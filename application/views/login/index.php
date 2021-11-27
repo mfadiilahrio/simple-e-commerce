@@ -35,6 +35,7 @@
   <div class="card">
     <div class="card-body login-card-body">
       <div class="login-logo">
+        <img src="<?php echo base_url('assets/images/logo1.png'); ?>" height="50" /><br/>
         <b>E-commerce</b>
       </div>
       <!-- /.login-logo -->

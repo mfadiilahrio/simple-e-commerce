@@ -57,7 +57,7 @@
                         <td><?= $no; ?></td>
                         <td><?= $record->id ?></td>
                         <td><?= $record->brand_name ?></td>
-                        <td><?= $record->brand_type_name ?></td>
+                        <td><?= $record->category_name ?></td>
                         <td><?= $record->name ?></td>
                         <td><?= $record->qty ?></td>
                         <td><?= "Rp " . number_format($record->price, 0, ",", ".") ?></td>

@@ -73,7 +73,7 @@ class Auth extends CI_Controller {
 					$this->session->set_flashdata('success', "Hello ".$user->name." :)");
 
 					if ($auth->user_type == 'customer') {
-						redirect(base_url("home"));
+						redirect(base_url("shopping"));
 					} else {
 						redirect(base_url("booking"));
 					}
