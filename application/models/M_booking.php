@@ -9,7 +9,6 @@ class M_booking extends CI_Model {
 			u.name as user_name,
 			u.phone as user_phone,
 			auth.email as user_email,
-			services.name as service_name,
 			shops.name as shop_name,
 			shops.phone as shop_phone,
 			shops.address as shop_address,
@@ -20,7 +19,6 @@ class M_booking extends CI_Model {
 			(SELECT SUM(booking_items.price * booking_items.qty) FROM booking_items WHERE booking_items.booking_id = bookings.id) + bookings.other_cost as total');
 		$this->db->join('users u', 'u.id = bookings.user_id', 'left');
 		$this->db->join('auth', 'auth.user_id = u.id', 'left');
-		$this->db->join('services', 'services.id = bookings.service_id', 'left');
 		$this->db->join('shops', 'shops.id = bookings.shop_id', 'left');
 		$this->db->join('areas', 'areas.id = bookings.area_id', 'left');
 		$this->db->join('bank_accounts', 'bank_accounts.id = bookings.bank_account_id', 'left');
@@ -38,7 +36,6 @@ class M_booking extends CI_Model {
 			u.name as user_name,
 			u.phone as user_phone,
 			auth.email as user_email,
-			services.name as service_name,
 			shops.name as shop_name,
 			shops.phone as shop_phone,
 			shops.address as shop_address,
@@ -49,7 +46,6 @@ class M_booking extends CI_Model {
 			(SELECT SUM(booking_items.price * booking_items.qty) FROM booking_items WHERE booking_items.booking_id = bookings.id) + bookings.other_cost as total');
 		$this->db->join('users u', 'u.id = bookings.user_id', 'left');
 		$this->db->join('auth', 'auth.user_id = u.id', 'left');
-		$this->db->join('services', 'services.id = bookings.service_id', 'left');
 		$this->db->join('shops', 'shops.id = bookings.shop_id', 'left');
 		$this->db->join('areas', 'areas.id = bookings.area_id', 'left');
 		$this->db->join('bank_accounts', 'bank_accounts.id = bookings.bank_account_id', 'left');
@@ -76,18 +72,18 @@ class M_booking extends CI_Model {
 			items.id as item_id, 
 			items.name,
 			items.image_url, 
-			brand_types.name as brand_type,
+			categories.name as category,
 			brands.name as brand');
 		$this->db->join('items', 'items.id = booking_items.item_id', 'left');
-		$this->db->join('brand_types', 'brand_types.id = items.brand_type_id', 'left');
-		$this->db->join('brands', 'brands.id = brand_types.brand_id', 'left');
+		$this->db->join('categories', 'categories.id = items.category_id', 'left');
+		$this->db->join('brands', 'brands.id = items.brand_id', 'left');
 		$this->db->where('booking_items.booking_id', $id);
 
 		$datas = $this->db->get('booking_items')->result();
 
 		foreach ($datas as $data) {
-			if (($data->brand != null && $data->brand_type != null)) {
-				$data->brand_name = $data->brand.' '.$data->brand_type;	
+			if (($data->brand != null && $data->category != null)) {
+				$data->brand_name = $data->brand;	
 			} else {
 				$data->brand_name = '-';
 			}

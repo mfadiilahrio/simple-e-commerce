@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2021 at 04:50 PM
+-- Generation Time: Nov 30, 2021 at 03:10 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -120,7 +120,6 @@ CREATE TABLE `bookings` (
   `service_id` int(11) NOT NULL,
   `shop_id` int(11) DEFAULT NULL,
   `area_id` int(11) NOT NULL,
-  `type` enum('booking','shopping') NOT NULL,
   `complaint` text,
   `date` datetime NOT NULL,
   `address` varchar(255) NOT NULL,
@@ -166,7 +165,8 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `name`, `status`) VALUES
-(1, 'Champ', 1);
+(1, 'Champ', 1),
+(2, 'Fiesta', 1);
 
 -- --------------------------------------------------------
 
@@ -177,7 +177,6 @@ INSERT INTO `brands` (`id`, `name`, `status`) VALUES
 CREATE TABLE `carts` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `type` enum('booking','shopping') NOT NULL DEFAULT 'shopping',
   `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -185,8 +184,9 @@ CREATE TABLE `carts` (
 -- Dumping data for table `carts`
 --
 
-INSERT INTO `carts` (`id`, `user_id`, `type`, `status`) VALUES
-(4, 11, 'shopping', 0);
+INSERT INTO `carts` (`id`, `user_id`, `status`) VALUES
+(4, 11, 0),
+(5, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -225,7 +225,8 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `status`) VALUES
-(1, 'Ayam', 1);
+(1, 'Ayam', 1),
+(2, 'Ikan', 1);
 
 -- --------------------------------------------------------
 
@@ -251,27 +252,6 @@ CREATE TABLE `items` (
 
 INSERT INTO `items` (`id`, `brand_id`, `category_id`, `name`, `description`, `price`, `image_url`, `qty`, `status`) VALUES
 (19, 1, 1, 'Chicken Nugget', 'Champ chicken nugget 500gram. Produk ready, baru dan fresh setiap hari. Order dan jadwal pengiriman :\r\n- Order masuk pukul 18.00wib sd pukul 05.00wib. Paket akan dikirim dihari yang sama. Start pengiriman pukul 08.00wib\r\n- Order masuk pukul 06.00wib sd pukul 17.00wib. Paket akan dikirim ke esokan harinya Start pengiriman mulai pukul 08.00wib\r\n- Pengiriman setiap hari ( Senin - Minggu ) kecuali Toko tutup/ libur', 15000, 'assets/images/items/item_19.png', 100, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `services`
---
-
-CREATE TABLE `services` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `image_url` varchar(255) DEFAULT NULL,
-  `url` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `services`
---
-
-INSERT INTO `services` (`id`, `name`, `description`, `image_url`, `url`) VALUES
-(1, 'Belanja', '', 'assets/images/shopping-cart.png', 'shopping');
 
 -- --------------------------------------------------------
 
@@ -391,12 +371,6 @@ ALTER TABLE `items`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `services`
---
-ALTER TABLE `services`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `shops`
 --
 ALTER TABLE `shops`
@@ -440,49 +414,43 @@ ALTER TABLE `bank_accounts`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `booking_items`
 --
 ALTER TABLE `booking_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT for table `services`
---
-ALTER TABLE `services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `shops`

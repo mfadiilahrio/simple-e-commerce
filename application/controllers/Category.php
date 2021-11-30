@@ -95,7 +95,6 @@ class Category extends CI_Controller {
 
 		if($this->session->userdata('user_id') != null){
 			$data['cart_total'] = $this->m_cart->getTotalCartItems($this->session->userdata('user_id'));
-			$data['booking_cart_total'] = $this->m_cart->getTotalBookingCartItems($this->session->userdata('user_id'));
 		}
 		
 		$this->load->view('templates/header', $data);

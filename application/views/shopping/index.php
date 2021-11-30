@@ -44,18 +44,13 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label>Kategori</label>
-                  <select name="brand_id" id="brand_id" class="form-control select2bs4" style="width: 100%;" required>
+                  <select name="category_id" id="category_id" class="form-control select2bs4" style="width: 100%;" required>
                     <option>--Pilih Kategori--</option>
                     <?php 
                     foreach ($categories as $data) {
                       echo '<option value="'.$data->id.'">'.$data->name.'</option>';
                     }
                     ?>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Tipe</label>
-                  <select name="brand_type_id" id="brand_type_id" class="form-control select2bs4" style="width: 100%;" required>
                   </select>
                 </div>
               </div>
@@ -69,6 +64,33 @@
         </div>
         <!-- /.card -->
         <div class="row" id="products">
+          <?php foreach ($records as $record) {
+            if (strlen($record->image_url) > 0) {
+              $image_url = base_url($record->image_url);
+            } else {
+              $image_url = base_url("assets/images/image_placeholder.png");
+            }
+          ?>
+          <div class="col-md-2"> 
+            <div class="card"> 
+              <a class="p-3"> 
+                <img src="<?= $image_url ?>" class="card-img-top" style="height: 200px;object-fit: contain;" alt="<?= $image_url ?>"> 
+              </a> 
+              <div class="card-body"> 
+                <div class="row"> 
+                  <div class="col-md-12"> 
+                    <h5 class="card-title text-bold">$record->name</h5> 
+                  </div> 
+                </div> 
+              </div> 
+              <div class="card-footer"> 
+                <p class="text text-secondary">Rp.<?= $record->price ?></p> 
+                <div onclick="addToCartItems(<?= $record->id ?>)" class="btn btn-sm btn-outline-info btn-block">Tambah ke keranjang</div> 
+              </div> 
+            </div> 
+            <br> 
+          </div>
+          <?php } ?>
         </div>
       </div>
       <!-- /.container-fluid -->
@@ -78,42 +100,17 @@
   <!-- /.content-wrapper -->
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#brand_id').change(function(e) {
-
-        $('#brand_type_id').empty();
-        $('#products').empty();
-
-        var data = {
-          'brand_id':$('#brand_id').val()
-        }
-
-        $.ajax({
-          type: 'GET',
-          url: "<?php echo base_url("bookingservice/getbrandtypebybrandid")?>",
-          data: data,
-          dataType: "json",
-          success: function(resultData) { 
-            var toAppend = '';
-            toAppend += '<option>--Pilih Tipe</option>';
-            $.each(resultData,function(i,o){
-              toAppend += '<option value="'+o.id+'">'+o.name+'</option>';
-           });
-            $('#brand_type_id').append(toAppend);
-          }
-        });
-      });
-
-      $('#brand_type_id').change(function(e) {
+      $('#category_id').change(function(e) {
 
         $('#products').empty();
 
         var data = {
-          'brand_type_id':$('#brand_type_id').val()
+          'category_id':$('#category_id').val()
         }
 
         $.ajax({
           type: 'GET',
-          url: "<?php echo base_url("bookingservice/getitemsbybrandtypeid")?>",
+          url: "<?php echo base_url("shopping/getitemsbycategoryid")?>",
           data: data,
           dataType: "json",
           success: function(resultData) { 

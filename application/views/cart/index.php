@@ -231,7 +231,6 @@
           } else {
             $('#subtotal').text('Rp.' + resultData.result.subtotal);
             $('#qty-' + id).val(resultData.result.cartItem.qty);
-            $('#booking_cart_total').text(resultData.result.bookingCartTotal.qty);
             $('#cart_total').text(resultData.result.cartTotal.qty);
           }
         }

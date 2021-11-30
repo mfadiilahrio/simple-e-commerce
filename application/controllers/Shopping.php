@@ -20,6 +20,7 @@ class Shopping extends CI_Controller {
 		$data['success'] = $this->session->flashdata('success');
 		$data['error'] = $this->session->flashdata('error');
 
+		$data['records'] = $this->m_base->getListWhere('items', array());
 		$data['categories'] = $this->m_base->getListWhere('categories', array(), 'asc');
 
 		$data['page_name'] = $this->page_name;
@@ -28,43 +29,20 @@ class Shopping extends CI_Controller {
 		$this->footer();
 	}
 
-	public function getbrandtypebybrandid()
+	public function getitemsbycategoryid()
 	{
-		$data = $this->m_base->getListWhere(
-			'brand_types',
-			array(
-				'brand_id' => $this->input->get('brand_id')
-			)
-		);
-
-		echo json_encode($data);
-	}
-
-	public function getitemsbybrandtypeid()
-	{
-		$type = $this->input->get('brand_type_id');
-
-		if ($type != null) {
+		if(is_numeric($this->input->get('category_id'))) {
 			$items = $this->m_base->getListWhere(
 				'items',
 				array(
-					'brand_type_id' => $this->input->get('brand_type_id')
+					'category_id' => $this->input->get('category_id')
 				)
 			);
-
-			$common_items = $this->m_base->getListWhere(
-				'items',
-				array(
-					'brand_type_id' => NULL
-				)
-			);
-
-			$result = array_merge($items, $common_items);
 		} else {
-			$result = $this->m_base->getListWhere('items', array());
+			$items = $this->m_base->getListWhere('items', array());
 		}
 
-		echo json_encode($result);
+		echo json_encode($items);
 	}
 
 	public function header()
@@ -77,7 +55,6 @@ class Shopping extends CI_Controller {
 
 		if($this->session->userdata('user_id') != null){
 			$data['cart_total'] = $this->m_cart->getTotalCartItems($this->session->userdata('user_id'));
-			$data['booking_cart_total'] = $this->m_cart->getTotalBookingCartItems($this->session->userdata('user_id'));
 		}
 		
 		$this->load->view('templates/header', $data);
