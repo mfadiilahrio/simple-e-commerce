@@ -105,15 +105,6 @@
                 <!-- /.col -->
               </div>
               <!-- /.row -->
-              <?php if($record->type == 'booking' && ($record->complaint != null || $record->complaint != '')): ?>
-              <div class="row mb-5 mt-5">
-                <div class="col-md-12">
-                  <strong>Keluhan</strong><br>
-                  <p><?= $record->complaint ?></p>
-                </div>
-              </div>
-              <!-- /.row -->
-              <?php endif ?>
               <!-- Table row -->
               <div class="row">
                 <div class="col-12 table-responsive">
@@ -212,20 +203,7 @@
                     <div class="form-group">
                       <input type="file" name="image" class="form-control" value="" required>
                       <input type="hidden" name="id" class="form-control" value="<?= $record->id ?>" required>
-                      <input type="hidden" name="type" class="form-control" value="<?= $record->type ?>" required>
                     </div>
-                    <?php if ($record->type == 'booking') : ?>
-                    <div class="form-group">
-                      <select name="bank_account_id" id="bank_account_id" class="form-control select2bs4" style="width: 100%;">
-                        <option>--Pilih Rekening--</option>
-                        <?php 
-                        foreach ($bank_accounts as $data) {
-                          echo '<option value="'.$data->id.'">'.$data->method_name.'</option>';
-                        }
-                        ?>
-                      </select>
-                    </div>
-                  <?php endif ?>
                   </div>
                 </div>
                 <button class="btn btn-primary btn-sm" type="submit">Upload</button>
@@ -426,7 +404,6 @@
       $( "#shipped-booking-status" ).click(function() {
         var data = {
           'id':<?= $record->id ?>,
-          'type':"<?= $record->type ?>",
           'booking_status': 'shipped',
           'shop_id': $("#shop_id").val(),
           'awb_number': $("#awb_number").val()
@@ -438,7 +415,6 @@
       $( "#confirm-booking-status" ).click(function() {
         var data = {
           'id':<?= $record->id ?>,
-          'type':"<?= $record->type ?>",
           'booking_status': 'confirmed',
           'shop_id': $("#shop_id").val()
         }
@@ -453,7 +429,6 @@
       $( "#send-bill" ).click(function() {
         var data = {
           'id':<?= $record->id ?>,
-          'type':"<?= $record->type ?>",
           'booking_status': 'waiting_payment',
           'other_cost': $("#other_cost").val(),
           'other_cost_note': $("#other_cost_note").val(),
@@ -464,18 +439,10 @@
       });
 
       $( "#confirm-payment" ).click(function() {
-        var type = "<?= $record->type ?>";
-        var bookingStatus = "";
-
-        if (type == 'booking') {
-          bookingStatus = 'completed'; 
-        } else {
-          bookingStatus = 'process';
-        }
+        var bookingStatus = 'process';
 
         var data = {
           'id':<?= $record->id ?>,
-          'type':"<?= $record->type ?>",
           'booking_status': bookingStatus
         }
 
@@ -484,28 +451,18 @@
 
       $( "#update-booking-status" ).click(function() {
         var bookingStatus = "<?= $record->next_booking_status ?>";
-        var type = "<?= $record->type ?>";
 
         var data = {
           'id':<?= $record->id ?>,
-          'type': type,
           'booking_status': bookingStatus
         }
 
         if (bookingStatus == 'confirmed') {
-          if (type == 'booking') {
-            $('#modal-confirmed').modal('show'); 
-          } else {
-            updateBookingStatus(data);
-          }
+          updateBookingStatus(data);
         } else if (bookingStatus == 'shipped') {
           $('#modal-shipping').modal('show');
         } else if (bookingStatus == 'waiting_payment') {
-          if (type == 'booking') {
-            $('#modal-other-cost').modal('show');
-          } else {
-            updateBookingStatus(data);
-          }
+          updateBookingStatus(data);
         } else {
           if ("<?= $record->booking_status ?>" == "checking_payment") {
             $('#modal-checking-payment').modal('show'); 
@@ -520,7 +477,6 @@
         if (confirm('Apakah anda yakin menolak pesanan ini?')) {
           var data = {
             'id':<?= $record->id ?>,
-            'type':"<?= $record->type ?>",
             'booking_status': 'canceled'
           }
 

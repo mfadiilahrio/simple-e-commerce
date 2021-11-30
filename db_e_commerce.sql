@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2021 at 03:10 PM
+-- Generation Time: Nov 30, 2021 at 03:49 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -117,7 +117,6 @@ INSERT INTO `bank_accounts` (`id`, `bank_id`, `account_number`) VALUES
 CREATE TABLE `bookings` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `service_id` int(11) NOT NULL,
   `shop_id` int(11) DEFAULT NULL,
   `area_id` int(11) NOT NULL,
   `complaint` text,
@@ -134,6 +133,13 @@ CREATE TABLE `bookings` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `user_id`, `shop_id`, `area_id`, `complaint`, `date`, `address`, `phone`, `postal_code`, `other_cost`, `other_cost_note`, `booking_status`, `bank_account_id`, `awb_number`, `payment_url`, `created_at`) VALUES
+(1, 11, 1, 5, NULL, '2021-11-30 21:35:38', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 0, NULL, 'completed', 2, 'AWB 1020980', 'assets/images/payments/payment_1.png', '2021-11-30 14:35:38');
+
 -- --------------------------------------------------------
 
 --
@@ -147,6 +153,13 @@ CREATE TABLE `booking_items` (
   `price` bigint(20) NOT NULL,
   `qty` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `booking_items`
+--
+
+INSERT INTO `booking_items` (`id`, `booking_id`, `item_id`, `price`, `qty`) VALUES
+(1, 1, 19, 15000, 1);
 
 -- --------------------------------------------------------
 
@@ -186,7 +199,7 @@ CREATE TABLE `carts` (
 
 INSERT INTO `carts` (`id`, `user_id`, `status`) VALUES
 (4, 11, 0),
-(5, 11, 1);
+(5, 11, 0);
 
 -- --------------------------------------------------------
 
@@ -206,7 +219,8 @@ CREATE TABLE `cart_items` (
 --
 
 INSERT INTO `cart_items` (`id`, `cart_id`, `item_id`, `qty`) VALUES
-(5, 4, 18, 105);
+(5, 4, 18, 105),
+(7, 5, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -251,7 +265,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `brand_id`, `category_id`, `name`, `description`, `price`, `image_url`, `qty`, `status`) VALUES
-(19, 1, 1, 'Chicken Nugget', 'Champ chicken nugget 500gram. Produk ready, baru dan fresh setiap hari. Order dan jadwal pengiriman :\r\n- Order masuk pukul 18.00wib sd pukul 05.00wib. Paket akan dikirim dihari yang sama. Start pengiriman pukul 08.00wib\r\n- Order masuk pukul 06.00wib sd pukul 17.00wib. Paket akan dikirim ke esokan harinya Start pengiriman mulai pukul 08.00wib\r\n- Pengiriman setiap hari ( Senin - Minggu ) kecuali Toko tutup/ libur', 15000, 'assets/images/items/item_19.png', 100, 1);
+(19, 1, 1, 'Chicken Nugget', 'Champ chicken nugget 500gram. Produk ready, baru dan fresh setiap hari. Order dan jadwal pengiriman :\r\n- Order masuk pukul 18.00wib sd pukul 05.00wib. Paket akan dikirim dihari yang sama. Start pengiriman pukul 08.00wib\r\n- Order masuk pukul 06.00wib sd pukul 17.00wib. Paket akan dikirim ke esokan harinya Start pengiriman mulai pukul 08.00wib\r\n- Pengiriman setiap hari ( Senin - Minggu ) kecuali Toko tutup/ libur', 15000, 'assets/images/items/item_19.png', 99, 1);
 
 -- --------------------------------------------------------
 
@@ -414,13 +428,13 @@ ALTER TABLE `bank_accounts`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `booking_items`
 --
 ALTER TABLE `booking_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `brands`
@@ -438,7 +452,7 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `categories`

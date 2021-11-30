@@ -53,15 +53,6 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
-    <?php if($record->type == 'booking' && ($record->complaint != null || $record->complaint != '')): ?>
-      <div class="row mb-5 mt-5">
-        <div class="col-md-12">
-          <strong>Keluhan</strong><br>
-          <p><?= $record->complaint ?></p>
-        </div>
-      </div>
-      <!-- /.row -->
-    <?php endif ?>
     <!-- Table row -->
     <div class="row">
       <div class="col-12 table-responsive">

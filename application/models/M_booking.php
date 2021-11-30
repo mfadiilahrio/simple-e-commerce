@@ -114,80 +114,41 @@ class M_booking extends CI_Model {
 		// 7. completed 
 
 		if($data != null) {
-			if ($data->type == 'booking') {
-				if ($data->booking_status == 'waiting_confirmation') {
+			if ($data->booking_status == 'waiting_confirmation') {
 				//1
-					$data->booking_status_name = 'Menunggu Konfirmasi';
-					$data->next_booking_status = 'confirmed';
-					$data->next_booking_status_name = 'Konfirmasi';
-				} else if ($data->booking_status == 'confirmed') {
+				$data->booking_status_name = 'Menunggu Konfirmasi';
+				$data->next_booking_status = 'waiting_payment';
+				$data->next_booking_status_name = 'Konfirmasi';
+			} else if ($data->booking_status == 'waiting_payment') {
 				//2
-					$data->booking_status_name = 'Dikonfirmasi';
-					$data->next_booking_status = 'process';
-					$data->next_booking_status_name = 'Proses';
-				} else if ($data->booking_status == 'process') {
+				$data->booking_status_name = ($this->session->userdata('user_type') == 'customer') ? 'Belum Bayar' : 'Menunggu Pembayaran';
+				$data->next_booking_status = 'checking_payment';
+				$data->next_booking_status_name = 'Mengecek Pembayaran';
+			} else if ($data->booking_status == 'checking_payment') {
 				//3
-					$data->booking_status_name = 'Diproses';
-					$data->next_booking_status = 'waiting_payment';
-					$data->next_booking_status_name = 'Kendaraan selesai diperbaiki';
-				} else if ($data->booking_status == 'waiting_payment') {
+				$data->booking_status_name = 'Mengecek Pembayaran';
+				$data->next_booking_status = 'process';
+				$data->next_booking_status_name = 'Cek Pembayaran';
+			} else if ($data->booking_status == 'process') {
 				//4
-					$data->booking_status_name = ($this->session->userdata('user_type') == 'customer') ? 'Belum Bayar' : 'Menunggu Pembayaran';
-					$data->next_booking_status = 'checking_payment';
-					$data->next_booking_status_name = 'Cek Pembayaran';
-				} else if ($data->booking_status == 'checking_payment') {
+				$data->booking_status_name = 'Diproses';
+				$data->next_booking_status = 'shipped';
+				$data->next_booking_status_name = 'Kirim';
+			} else if ($data->booking_status == 'shipped') {
 				//5
-					$data->booking_status_name = 'Mengecek Pembayaran';
-					$data->next_booking_status = 'completed';
-					$data->next_booking_status_name = 'Cek Pembayaran';
-				} else if ($data->booking_status == 'completed') {
+				$data->booking_status_name = 'Dikirim';
+				$data->next_booking_status = 'completed';
+				$data->next_booking_status_name = 'Selesai';
+			} else if ($data->booking_status == 'completed') {
 				//6
-					$data->booking_status_name = 'Selesai';
-					$data->next_booking_status = null;
-					$data->next_booking_status_name = null;
-				} else if ($data->booking_status == 'canceled') {
+				$data->booking_status_name = 'Selesai';
+				$data->next_booking_status = null;
+				$data->next_booking_status_name = null;
+			} else if ($data->booking_status == 'canceled') {
 				//7
-					$data->booking_status_name = 'Dibatalkan';
-					$data->next_booking_status = null;
-					$data->next_booking_status_name = null;
-				}
-			} else {
-				if ($data->booking_status == 'waiting_confirmation') {
-				//1
-					$data->booking_status_name = 'Menunggu Konfirmasi';
-					$data->next_booking_status = 'waiting_payment';
-					$data->next_booking_status_name = 'Konfirmasi';
-				} else if ($data->booking_status == 'waiting_payment') {
-				//2
-					$data->booking_status_name = ($this->session->userdata('user_type') == 'customer') ? 'Belum Bayar' : 'Menunggu Pembayaran';
-					$data->next_booking_status = 'checking_payment';
-					$data->next_booking_status_name = 'Mengecek Pembayaran';
-				} else if ($data->booking_status == 'checking_payment') {
-				//3
-					$data->booking_status_name = 'Mengecek Pembayaran';
-					$data->next_booking_status = 'process';
-					$data->next_booking_status_name = 'Cek Pembayaran';
-				} else if ($data->booking_status == 'process') {
-				//4
-					$data->booking_status_name = 'Diproses';
-					$data->next_booking_status = 'shipped';
-					$data->next_booking_status_name = 'Kirim';
-				} else if ($data->booking_status == 'shipped') {
-				//5
-					$data->booking_status_name = 'Dikirim';
-					$data->next_booking_status = 'completed';
-					$data->next_booking_status_name = 'Selesai';
-				} else if ($data->booking_status == 'completed') {
-				//6
-					$data->booking_status_name = 'Selesai';
-					$data->next_booking_status = null;
-					$data->next_booking_status_name = null;
-				} else if ($data->booking_status == 'canceled') {
-				//7
-					$data->booking_status_name = 'Dibatalkan';
-					$data->next_booking_status = null;
-					$data->next_booking_status_name = null;
-				}
+				$data->booking_status_name = 'Dibatalkan';
+				$data->next_booking_status = null;
+				$data->next_booking_status_name = null;
 			}
 
 			return $data;
