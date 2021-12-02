@@ -132,18 +132,6 @@
                 <form action="booking/createbooking" method="POST" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Area</label>
-                        <select name="area_id" class="form-control select2bs4" style="width: 100%;" required>
-                          <option>--Pilih Area--</option>
-                          <?php 
-                          foreach ($areas as $data) {
-                            echo '<option value="'.$data->id.'">'.$data->name.'</option>';
-                          }
-                          ?>
-                        </select>
-                        <input type="hidden" name="type" value="<?= $this->input->get('type') ?>">
-                      </div>
                       <?php if ($this->input->get('type') == 'booking') : ?>
                       <div class="form-group">
                         <label>Keluhan</label>

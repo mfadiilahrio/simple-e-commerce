@@ -13,7 +13,6 @@ class Booking extends CI_Controller {
 		$this->load->model('m_booking');
 		$this->load->model('m_cart');
 		$this->load->model('m_item');
-		$this->load->model('m_shop');
 		$this->load->model('m_user');
 		$this->load->model('m_bankaccount');
 		$this->timeStamp = date('Y-m-d H:i:s', time());
@@ -32,7 +31,7 @@ class Booking extends CI_Controller {
 			$data['bank_accounts'] = $this->m_bankaccount->getBankAccounts(array());
 			$data['record'] = $this->m_booking->getBooking(array('bookings.id' => $id));
 			$data['records'] = $this->m_booking->getBookingItems($id);
-			$data['shops'] = $this->m_shop->getShops();
+			$data['shops'] = $this->m_base->getListWhere('shops', array());
 
 			$subtotal = 0;
 
@@ -68,17 +67,13 @@ class Booking extends CI_Controller {
 
 	public function createbooking()
 	{
-		$area_id   = $this->input->post('area_id');
 		$complaint   = $this->input->post('complaint');
 		$date   = $this->input->post('date');
 		$address   = $this->input->post('address');
 		$postal_code   = $this->input->post('postal_code');
 		$bank_account_id   = $this->input->post('bank_account_id');
 
-		$this->form_validation->set_rules('type', 'Tipe Pesanan', 'required');
-		$this->form_validation->set_rules('area_id', 'Area', 'required|numeric');
 		$this->form_validation->set_rules('address', 'Alamat', 'required');
-
 		$this->form_validation->set_rules('bank_account_id', 'Metode pembayaran', 'required|numeric');
 		$this->form_validation->set_rules('postal_code', 'Kode pos', 'required|numeric');
 
@@ -86,7 +81,6 @@ class Booking extends CI_Controller {
 
 			$data = array(
 				'user_id' => $this->session->userdata('user_id'),
-				'area_id' => $area_id,
 				'complaint' => $complaint,
 				'date' => $this->timeStamp,
 				'address' => $address,
@@ -152,7 +146,9 @@ class Booking extends CI_Controller {
 					);
 				} else if ($booking_status == 'waiting_payment') {
 					$data = array(
-						'booking_status' => $booking_status
+						'booking_status' => $booking_status,
+						'other_cost' => $other_cost,
+						'other_cost_note' => $other_cost_note
 					);	
 				} else if ($booking_status == 'process' || $booking_status == 'completed' || $booking_status == 'canceled') {
 					$data = array(

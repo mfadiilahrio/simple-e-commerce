@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2021 at 03:49 PM
+-- Generation Time: Dec 02, 2021 at 05:02 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -21,28 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_e_commerce`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `areas`
---
-
-CREATE TABLE `areas` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `areas`
---
-
-INSERT INTO `areas` (`id`, `name`) VALUES
-(1, 'Jakarta'),
-(2, 'Bogor'),
-(3, 'Depok'),
-(4, 'Tangerang'),
-(5, 'Bekasi');
 
 -- --------------------------------------------------------
 
@@ -117,8 +95,7 @@ INSERT INTO `bank_accounts` (`id`, `bank_id`, `account_number`) VALUES
 CREATE TABLE `bookings` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `shop_id` int(11) DEFAULT NULL,
-  `area_id` int(11) NOT NULL,
+  `shop_id` int(11) NOT NULL DEFAULT '1',
   `complaint` text,
   `date` datetime NOT NULL,
   `address` varchar(255) NOT NULL,
@@ -137,8 +114,10 @@ CREATE TABLE `bookings` (
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`id`, `user_id`, `shop_id`, `area_id`, `complaint`, `date`, `address`, `phone`, `postal_code`, `other_cost`, `other_cost_note`, `booking_status`, `bank_account_id`, `awb_number`, `payment_url`, `created_at`) VALUES
-(1, 11, 1, 5, NULL, '2021-11-30 21:35:38', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 0, NULL, 'completed', 2, 'AWB 1020980', 'assets/images/payments/payment_1.png', '2021-11-30 14:35:38');
+INSERT INTO `bookings` (`id`, `user_id`, `shop_id`, `complaint`, `date`, `address`, `phone`, `postal_code`, `other_cost`, `other_cost_note`, `booking_status`, `bank_account_id`, `awb_number`, `payment_url`, `created_at`) VALUES
+(1, 11, 1, NULL, '2021-11-30 21:35:38', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 0, NULL, 'completed', 2, 'AWB 1020980', 'assets/images/payments/payment_1.png', '2021-11-30 14:35:38'),
+(2, 11, 1, NULL, '2021-12-02 22:38:23', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 0, NULL, 'completed', 2, 'AWB 0980912', 'assets/images/payments/payment_2.png', '2021-12-02 15:38:23'),
+(3, 11, 1, NULL, '2021-12-02 22:41:57', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 10000, 'Biaya pengiriman', 'completed', 2, 'AWB 1098234908', 'assets/images/payments/payment_3.png', '2021-12-02 15:41:57');
 
 -- --------------------------------------------------------
 
@@ -159,7 +138,9 @@ CREATE TABLE `booking_items` (
 --
 
 INSERT INTO `booking_items` (`id`, `booking_id`, `item_id`, `price`, `qty`) VALUES
-(1, 1, 19, 15000, 1);
+(1, 1, 19, 15000, 1),
+(2, 2, 19, 15000, 1),
+(3, 3, 19, 15000, 1);
 
 -- --------------------------------------------------------
 
@@ -198,8 +179,8 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`id`, `user_id`, `status`) VALUES
-(4, 11, 0),
-(5, 11, 0);
+(9, 11, 0),
+(10, 11, 0);
 
 -- --------------------------------------------------------
 
@@ -219,8 +200,8 @@ CREATE TABLE `cart_items` (
 --
 
 INSERT INTO `cart_items` (`id`, `cart_id`, `item_id`, `qty`) VALUES
-(5, 4, 18, 105),
-(7, 5, 19, 1);
+(16, 9, 19, 1),
+(17, 10, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -275,7 +256,6 @@ INSERT INTO `items` (`id`, `brand_id`, `category_id`, `name`, `description`, `pr
 
 CREATE TABLE `shops` (
   `id` int(11) NOT NULL,
-  `area_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `address` varchar(255) NOT NULL,
@@ -286,9 +266,8 @@ CREATE TABLE `shops` (
 -- Dumping data for table `shops`
 --
 
-INSERT INTO `shops` (`id`, `area_id`, `name`, `phone`, `address`, `postal_code`) VALUES
-(1, 1, 'Cabang Jakarta', '081111111111', 'Manggarai, Jakarta Selatan', 12850),
-(2, 5, 'Cabang Bekasi', '089999999999', 'Harapan Jaya, Bekasi Utara', 17124);
+INSERT INTO `shops` (`id`, `name`, `phone`, `address`, `postal_code`) VALUES
+(1, 'Cabang Bekasi', '081111111111', 'Bekasi Utara, Kota Bekasi', 12850);
 
 -- --------------------------------------------------------
 
@@ -316,12 +295,6 @@ INSERT INTO `users` (`id`, `name`, `phone`, `address`, `postal_code`, `dob`) VAL
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `areas`
---
-ALTER TABLE `areas`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `auth`
@@ -401,12 +374,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `areas`
---
-ALTER TABLE `areas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT for table `auth`
 --
 ALTER TABLE `auth`
@@ -428,13 +395,13 @@ ALTER TABLE `bank_accounts`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `booking_items`
 --
 ALTER TABLE `booking_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `brands`
@@ -446,13 +413,13 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -465,12 +432,6 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `items`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT for table `shops`
---
-ALTER TABLE `shops`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

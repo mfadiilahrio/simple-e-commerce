@@ -39,7 +39,6 @@
                     <th>No</th>
                     <th>ID</th>
                     <th>Customer</th>
-                    <th>Area</th>
                     <th>Keluhan</th>
                     <th>Tanggal</th>
                     <th>Biaya Tambahan</th>
@@ -66,7 +65,6 @@
                         <td><?= $no; ?></td>
                         <td><?= $record->id ?></td>
                         <td><?= $record->user_name ?></td>
-                        <td><?= $record->area_name ?></td>
                         <td class="text-truncate" style="max-width: 150px;"><?= $record->complaint ?></td>
                         <td><?= $record->date ?></td>
                         <td><?= "Rp " . number_format($record->other_cost, 0, ",", ".") ?></td>

@@ -23,7 +23,6 @@ class Cart extends CI_Controller {
 
 		$data['booking_id'] = $this->input->get('booking_id');
 		$data['user_id'] = $this->input->get('user_id');
-		$data['areas'] = $this->m_base->getListWhere('areas', array());
 		$data['bank_accounts'] = $this->m_bankaccount->getBankAccounts(array());
 		$data['records'] = $this->m_cart->getData($data['user_id']);
 
@@ -47,7 +46,6 @@ class Cart extends CI_Controller {
 		$data['success'] = $this->session->flashdata('success');
 		$data['error'] = $this->session->flashdata('error');
 
-		$data['areas'] = $this->m_base->getListWhere('areas', array());
 		$data['bank_accounts'] = $this->m_bankaccount->getBankAccounts(array());
 
 		$data['page_name'] = $this->page_name;

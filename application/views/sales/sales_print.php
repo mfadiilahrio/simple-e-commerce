@@ -31,7 +31,6 @@
             <tr>
               <th>No</th>
               <th>ID</th>
-              <th>Tipe</th>
               <th>Tanggal</th>
               <th>Biaya Tambahan</th>
               <th>Total</th>
@@ -55,7 +54,6 @@
             <tr>
               <td><?= $no; ?></td>
               <td><?= $record->id ?></td>
-              <td><span class="badge badge-<?= ($record->type == 'booking') ? 'success' : 'secondary' ?>"><?= ($record->type == 'booking') ? 'Servis' : 'Belanja' ?></span></td>
               <td><?= $record->date ?></td>
               <td><?= "Rp " . number_format($record->other_cost, 0, ",", ".") ?></td>
               <td><?= "Rp " . number_format($record->total, 0, ",", ".") ?></td>

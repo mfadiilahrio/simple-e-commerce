@@ -266,16 +266,6 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label>Pilih Toko Pengirim</label>
-                    <select name="shop_id" id="shop_id" class="form-control select2bs4" style="width: 100%;" required>
-                      <?php 
-                      foreach ($shops as $shop) {
-                        echo '<option value="'.$shop->id.'">'.$shop->name.' - '.$shop->area_name.'</option>';
-                      }
-                      ?>
-                    </select>
-                  </div>
-                  <div class="form-group">
                     <label>Nomer Resi (Opsional)</label>
                     <input type="text" name="awb_number" id="awb_number" class="form-control">
                   </div>
@@ -340,12 +330,11 @@
                   </div>
                   <div class="form-group">
                     <label>Catatan Biaya Tambahan</label>
-                    <textarea class="form-control" name="other_cost_note" id="other_cost_note"></textarea>
+                    <textarea class="form-control" name="other_cost_note" id="other_cost_note" placeholder="Contoh: Biaya pengiriman"></textarea>
                   </div>
                 </div>
               </div>
-              <button class="btn btn-warning btn-sm" id="add-items">Tambahkan Barang</button>
-              <button class="btn btn-primary btn-sm" id="send-bill">Kirim Tagihan</button>
+              <button class="btn btn-primary btn-sm" id="send-bill">Konfirmasi</button>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tutup</button>
@@ -405,7 +394,7 @@
         var data = {
           'id':<?= $record->id ?>,
           'booking_status': 'shipped',
-          'shop_id': $("#shop_id").val(),
+          'shop_id': 1,
           'awb_number': $("#awb_number").val()
         }
 
@@ -422,17 +411,12 @@
         updateBookingStatus(data);
       });
 
-      $( "#add-items" ).click(function() {
-        window.location.href = "<?= base_url('bookingservice?booking_id='.$record->id) ?>";
-      });
-
       $( "#send-bill" ).click(function() {
         var data = {
           'id':<?= $record->id ?>,
           'booking_status': 'waiting_payment',
           'other_cost': $("#other_cost").val(),
-          'other_cost_note': $("#other_cost_note").val(),
-          'bank_account_id': $("bank_account_id").val()
+          'other_cost_note': $("#other_cost_note").val()
         }
 
         updateBookingStatus(data);
@@ -462,7 +446,7 @@
         } else if (bookingStatus == 'shipped') {
           $('#modal-shipping').modal('show');
         } else if (bookingStatus == 'waiting_payment') {
-          updateBookingStatus(data);
+          $('#modal-other-cost').modal('show');
         } else {
           if ("<?= $record->booking_status ?>" == "checking_payment") {
             $('#modal-checking-payment').modal('show'); 
