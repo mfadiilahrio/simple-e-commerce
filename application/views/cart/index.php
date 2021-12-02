@@ -76,11 +76,11 @@
                             <p class="text text-secondary"><?= "Rp " . number_format($record->price, 0, ",", ".") ?></p>
                             <div class="form-group" style="width:100px">
                               <div class="input-group input-group-sm">
-                                <div class="input-group-prepend" onclick="updateCartItem(<?= $record->id ?>, 'decrease')">
+                                <div class="input-group-prepend" onclick="updateCartItem(<?= $record->id ?>, 'decrease', <?= $record->item_id ?>)">
                                   <button type="button" class="btn btn-outline-danger"><i class="fa fa-minus"></i></button>
                                 </div>
                                 <input type="text" id="qty-<?= $record->id ?>" class="form-control input-number" value="<?= $record->qty ?>" min="1" max="100" readonly/>
-                                <div class="input-group-append" onclick="updateCartItem(<?= $record->id ?>, 'increase')">
+                                <div class="input-group-append" onclick="updateCartItem(<?= $record->id ?>, 'increase', <?= $record->item_id ?>)">
                                   <button type="button" class="btn btn-outline-info"><i class="fa fa-plus"></i></button>
                                 </div>
                               </div>
@@ -209,7 +209,7 @@
   </div>
   <!-- /.content-wrapper -->
   <script type="text/javascript">
-    function updateCartItem(id, type_update) {
+    function updateCartItem(id, type_update, item_id) {
 
       var urlParams = new URLSearchParams(window.location.search);
 
@@ -217,7 +217,8 @@
         'user_id':<?= $user_id ?>,
         'type': urlParams.get('type'),
         'id': id,
-        'type_update': type_update
+        'type_update': type_update,
+        'item_id': item_id
       }
 
       $.ajax({

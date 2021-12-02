@@ -79,7 +79,7 @@
               <div class="card-body"> 
                 <div class="row"> 
                   <div class="col-md-12"> 
-                    <h5 class="card-title text-bold">$record->name</h5> 
+                    <h5 class="card-title text-bold"><?= $record->name ?></h5> 
                   </div> 
                 </div> 
               </div> 

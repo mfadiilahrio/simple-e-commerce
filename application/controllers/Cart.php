@@ -121,13 +121,17 @@ class Cart extends CI_Controller {
 	public function updatecartitem() {
 		$user_id = $this->input->post('user_id');
 		$id = $this->input->post('id');
+		$item_id = $this->input->post('item_id');
 		$type_update = $this->input->post('type_update');
 
+		$item = $this->m_base->getWhere('items', array('id' => $item_id));
 		$cart_item = $this->m_base->getWhere('cart_items', array('id' => $id));
 
-		if ($id != null && $type_update != null) {
+		if ($id != null && $type_update != null && $item != null && $cart_item != null) {
 			if ($type_update == 'decrease' && $cart_item->qty < 2) {
 				echo json_encode(array('error' => 'Minimum kuantitas adalah 1'));
+			} else if ($type_update == 'increase' && $cart_item->qty >= $item->qty) {
+				echo json_encode(array('error' => 'Stok habis'));
 			} else {
 				if ($this->m_cart->updateQty($type_update, 'id', $id)) {
 					$result = array(
