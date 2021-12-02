@@ -267,7 +267,6 @@
 
             $('#subtotal').text('Rp.' + resultData.result.subtotal);
             $('#item-' + id).remove();
-            $('#booking_cart_total').text(resultData.result.bookingCartTotal.qty);
             $('#cart_total').text(resultData.result.cartTotal.qty);
           }
         }

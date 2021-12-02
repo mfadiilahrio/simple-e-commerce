@@ -147,14 +147,6 @@
           </span>
         </a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link" href="<?= base_url("cart?type=booking&user_id=".$this->session->userdata('user_id')) ?>" hidden>
-          <i class="fas fa-cogs"></i>
-          <span class="badge badge-warning navbar-badge" id="booking_cart_total">
-            <?= (isset($booking_cart_total->qty)) ? $booking_cart_total->qty : "0" ?>
-          </span>
-        </a>
-      </li>
       <?php endif ?>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
