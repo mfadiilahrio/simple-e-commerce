@@ -61,22 +61,28 @@ class Cart extends CI_Controller {
 		$user_id = $this->input->post('user_id');
 		$item_id = $this->input->post('item_id');
 
-		if ($user_id != null && $item_id != null) {
-			$cart_where = array('user_id' => $user_id, 'status' => true);
+		$item = $this->m_base->getWhere('items', array('id' => $item_id));
 
-			$cart = $this->m_base->getWhere('carts', $cart_where);
+		if ($item->qty < 1) {
+			echo json_encode(array('error' => 'Stok habis'));
+		} else {
+			if ($user_id != null && $item_id != null) {
+				$cart_where = array('user_id' => $user_id, 'status' => true);
 
-			if ($cart != null) {
-				$this->addtocartitem($user_id, $item_id);
-			} else {
-				if ($this->m_base->createData('carts', $cart_where)) {
+				$cart = $this->m_base->getWhere('carts', $cart_where);
+
+				if ($cart != null) {
 					$this->addtocartitem($user_id, $item_id);
 				} else {
-					echo json_encode(array('error' => 'Error saat menambahkan ke keranjang'));
-				}
-			}	
-		} else {
-			echo json_encode(array('error' => 'Error saat menambahkan ke keranjang'));	
+					if ($this->m_base->createData('carts', $cart_where)) {
+						$this->addtocartitem($user_id, $item_id);
+					} else {
+						echo json_encode(array('error' => 'Error saat menambahkan ke keranjang'));
+					}
+				}	
+			} else {
+				echo json_encode(array('error' => 'Error saat menambahkan ke keranjang'));	
+			}
 		}
 	}
 
@@ -88,6 +94,7 @@ class Cart extends CI_Controller {
 
 		$cart_item_where = array('cart_id' => $cart->id, 'item_id' => $item_id);
 
+		$item = $this->m_base->getWhere('items', array('id' => $item_id));
 		$cart_item = $this->m_base->getWhere('cart_items', $cart_item_where);
 
 		$cart_item_data = array(
@@ -95,16 +102,22 @@ class Cart extends CI_Controller {
 			'item_id' => $item_id
 		);
 
-		if ($cart_item != null) {
-			$cart_item_data['qty'] = $cart_item->qty + 1;
+		if ($cart_item != null && $item != null) {
+			$qty = $cart_item->qty + 1;
 
-			if ($this->m_base->updateData('cart_items', $cart_item_data, 'id', $cart_item->id)) {
-				echo json_encode(array(
-					'message' => 'Sukses menambahkan ke keranjang', 
-					'result' => $this->m_cart->getTotalCartItems($user_id)
-				));
+			if ($qty >= $item->qty) {
+				echo json_encode(array('error' => 'Stok habis'));
 			} else {
-				echo json_encode(array('error' => 'Error saat menambahkan ke keranjang'));
+				$cart_item_data['qty'] = $qty;
+
+				if ($this->m_base->updateData('cart_items', $cart_item_data, 'id', $cart_item->id)) {
+					echo json_encode(array(
+						'message' => 'Sukses menambahkan ke keranjang', 
+						'result' => $this->m_cart->getTotalCartItems($user_id)
+					));
+				} else {
+					echo json_encode(array('error' => 'Error saat menambahkan ke keranjang'));
+				}
 			}
 		} else {
 			if ($this->m_base->createData('cart_items', $cart_item_data)) {

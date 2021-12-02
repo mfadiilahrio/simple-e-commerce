@@ -73,18 +73,21 @@
           ?>
           <div class="col-md-2"> 
             <div class="card"> 
-              <a class="p-3"> 
+              <a class="p-1"> 
                 <img src="<?= $image_url ?>" class="card-img-top" style="height: 200px;object-fit: contain;" alt="<?= $image_url ?>"> 
               </a> 
               <div class="card-body"> 
                 <div class="row"> 
                   <div class="col-md-12"> 
-                    <h5 class="card-title text-bold"><?= $record->name ?></h5> 
+                    <h5 class="card-title text-bold text-sm"><?= $record->name ?></h5> 
                   </div> 
                 </div> 
               </div> 
               <div class="card-footer"> 
-                <p class="text text-secondary">Rp.<?= $record->price ?></p> 
+                <p class="text text-secondary text-sm">Rp.<?= $record->price ?></p>
+                <?php if($record->qty < 1) : ?> 
+                <p class="text text-danger text-sm">Stok Habis</p> 
+                <?php endif ?>
                 <div onclick="addToCartItems(<?= $record->id ?>)" class="btn btn-sm btn-outline-info btn-block">Tambah ke keranjang</div> 
               </div> 
             </div> 
@@ -117,25 +120,34 @@
             var toAppend = '';
             $.each(resultData,function(i,o){
               var image_url = "";
+              var out_of_stock = "";
+
               if (o.image_url.length > 0) {
                 image_url = "<?php echo base_url('"+o.image_url+"')?>";
               } else {
                 image_url = "<?php echo base_url("assets/images/image_placeholder.png")?>";
               }
+
+              if (o.qty < 1) { 
+                out_of_stock = "<p class='text text-danger text-sm'>Stok Habis</p>";
+              } else {
+                out_of_stock = "";
+              }
+
               toAppend += '<div class="col-md-2">' +
               '<div class="card">' +
-                '<a class="p-3">' +
+                '<a class="p-1">' +
                   '<img src="'+image_url+'" class="card-img-top" style="height: 200px;object-fit: contain;" alt="'+image_url+'">' +
                 '</a>' +
                 '<div class="card-body">' +
                   '<div class="row">' +
                     '<div class="col-md-12">' +
-                      '<h5 class="card-title text-bold">'+o.name+'</h5>' +
+                      '<h5 class="card-title text-bold text-sm">'+o.name+'</h5>' +
                     '</div>' +
                   '</div>' +
                 '</div>' +
                 '<div class="card-footer">' +
-                  '<p class="text text-secondary">Rp.'+o.price+'</p>' +
+                  '<p class="text text-secondary text-sm">Rp.'+o.price+'</p>'+out_of_stock +
                   '<div onclick="addToCartItems('+o.id+')" class="btn btn-sm btn-outline-info btn-block">Tambah ke keranjang</div>' +
                 '</div>' +
               '</div>' +
@@ -151,7 +163,6 @@
     function addToCartItems(id) {
       var data = {
         'user_id' : <?= $this->session->userdata('user_id') ?>,
-        'type':'shopping',
         'item_id':id
       }
 
