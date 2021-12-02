@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_item extends CI_Model {
 
-	function getitems() {
+	function getitems($category_id = null) {
 		$this->db->select('
 			items.*,
 			brands.name as brand_name,
@@ -11,6 +11,9 @@ class M_item extends CI_Model {
 		$this->db->join('brands', 'brands.id = items.brand_id', 'left');
 		$this->db->join('categories', 'categories.id = items.category_id', 'left');
 		$this->db->where('items.status', true);
+		if ($category_id != null) {
+			$this->db->where('items.category_id', $category_id);
+		}
 		$this->db->order_by('id', 'desc');
 
 		return $this->db->get_where('items')->result();

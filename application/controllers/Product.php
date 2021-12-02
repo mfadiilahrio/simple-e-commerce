@@ -54,6 +54,24 @@ class Product extends CI_Controller {
 		$this->footer();
 	}
 
+	public function detail()
+	{
+		$data['success'] = $this->session->flashdata('success');
+		$data['error'] = $this->session->flashdata('error');
+
+		$id = $this->input->get('id');
+
+		$where = array(
+			'items.id' => $id
+		);
+		$data['record'] = $this->m_item->getitem($where);
+
+		$data['page_name'] = $this->page_name;
+		$this->header();
+		$this->load->view('product/product_detail', $data);
+		$this->footer();
+	}
+
 	public function update()
 	{
 		$id = $this->input->post('id');

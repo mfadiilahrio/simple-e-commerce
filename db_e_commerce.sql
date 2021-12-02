@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2021 at 05:02 PM
+-- Generation Time: Dec 02, 2021 at 06:12 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -180,7 +180,8 @@ CREATE TABLE `carts` (
 
 INSERT INTO `carts` (`id`, `user_id`, `status`) VALUES
 (9, 11, 0),
-(10, 11, 0);
+(10, 11, 0),
+(11, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -201,7 +202,8 @@ CREATE TABLE `cart_items` (
 
 INSERT INTO `cart_items` (`id`, `cart_id`, `item_id`, `qty`) VALUES
 (16, 9, 19, 1),
-(17, 10, 19, 1);
+(17, 10, 19, 1),
+(18, 11, 19, 15);
 
 -- --------------------------------------------------------
 
@@ -246,7 +248,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `brand_id`, `category_id`, `name`, `description`, `price`, `image_url`, `qty`, `status`) VALUES
-(19, 1, 1, 'Chicken Nugget', 'Champ chicken nugget 500gram. Produk ready, baru dan fresh setiap hari. Order dan jadwal pengiriman :\r\n- Order masuk pukul 18.00wib sd pukul 05.00wib. Paket akan dikirim dihari yang sama. Start pengiriman pukul 08.00wib\r\n- Order masuk pukul 06.00wib sd pukul 17.00wib. Paket akan dikirim ke esokan harinya Start pengiriman mulai pukul 08.00wib\r\n- Pengiriman setiap hari ( Senin - Minggu ) kecuali Toko tutup/ libur', 15000, 'assets/images/items/item_19.png', 99, 1);
+(19, 1, 1, 'Chicken Nugget', 'Champ chicken nugget 500gram. Produk ready, baru dan fresh setiap hari. Order dan jadwal pengiriman :\r\n- Order masuk pukul 18.00wib sd pukul 05.00wib. Paket akan dikirim dihari yang sama. Start pengiriman pukul 08.00wib\r\n- Order masuk pukul 06.00wib sd pukul 17.00wib. Paket akan dikirim ke esokan harinya Start pengiriman mulai pukul 08.00wib\r\n- Pengiriman setiap hari ( Senin - Minggu ) kecuali Toko tutup/ libur', 15000, 'assets/images/items/item_19.png', 15, 1);
 
 -- --------------------------------------------------------
 
@@ -413,13 +415,13 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `categories`

@@ -72,11 +72,16 @@
             }
           ?>
           <div class="col-md-2"> 
-            <div class="card"> 
+            <div class="card" onclick="window.location='<?= base_url("product/detail?id=$record->id") ?>'"> 
               <a class="p-1"> 
                 <img src="<?= $image_url ?>" class="card-img-top" style="height: 200px;object-fit: contain;" alt="<?= $image_url ?>"> 
               </a> 
-              <div class="card-body"> 
+              <div class="card-body">
+                <div class="row"> 
+                  <div class="col-md-12"> 
+                    <h5 class="card-title text-sm"><?= $record->brand_name ?></h5> 
+                  </div> 
+                </div>
                 <div class="row"> 
                   <div class="col-md-12"> 
                     <h5 class="card-title text-bold text-sm"><?= $record->name ?></h5> 
@@ -87,8 +92,7 @@
                 <p class="text text-secondary text-sm">Rp.<?= $record->price ?></p>
                 <?php if($record->qty < 1) : ?> 
                 <p class="text text-danger text-sm">Stok Habis</p> 
-                <?php endif ?>
-                <div onclick="addToCartItems(<?= $record->id ?>)" class="btn btn-sm btn-outline-info btn-block">Tambah ke keranjang</div> 
+                <?php endif ?> 
               </div> 
             </div> 
             <br> 
@@ -135,11 +139,16 @@
               }
 
               toAppend += '<div class="col-md-2">' +
-              '<div class="card">' +
+              '<div class="card" onclick="openProduct('+o.id+')">' +
                 '<a class="p-1">' +
                   '<img src="'+image_url+'" class="card-img-top" style="height: 200px;object-fit: contain;" alt="'+image_url+'">' +
                 '</a>' +
                 '<div class="card-body">' +
+                  '<div class="row">' +
+                    '<div class="col-md-12">' +
+                      '<h5 class="card-title text-sm">'+o.brand_name+'</h5>' +
+                    '</div>' +
+                  '</div>' +
                   '<div class="row">' +
                     '<div class="col-md-12">' +
                       '<h5 class="card-title text-bold text-sm">'+o.name+'</h5>' +
@@ -148,7 +157,6 @@
                 '</div>' +
                 '<div class="card-footer">' +
                   '<p class="text text-secondary text-sm">Rp.'+o.price+'</p>'+out_of_stock +
-                  '<div onclick="addToCartItems('+o.id+')" class="btn btn-sm btn-outline-info btn-block">Tambah ke keranjang</div>' +
                 '</div>' +
               '</div>' +
               '<br>' +
@@ -159,6 +167,10 @@
         });
       });       
     });
+
+    function openProduct(id) {
+      location.href = "<?php echo base_url('product/detail?id="+id+"') ?>";
+    }
 
     function addToCartItems(id) {
       var data = {

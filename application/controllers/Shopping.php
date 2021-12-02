@@ -10,6 +10,7 @@ class Shopping extends CI_Controller {
 		parent::__construct();
 		
 		$this->load->model('m_base');
+		$this->load->model('m_item');
 		$this->load->model('m_cart');
 		$this->load->model('m_bankaccount');
 		$this->timeStamp = date('Y-m-d H:i:s', time());
@@ -20,7 +21,7 @@ class Shopping extends CI_Controller {
 		$data['success'] = $this->session->flashdata('success');
 		$data['error'] = $this->session->flashdata('error');
 
-		$data['records'] = $this->m_base->getListWhere('items', array());
+		$data['records'] = $this->m_item->getitems();
 		$data['categories'] = $this->m_base->getListWhere('categories', array(), 'asc');
 
 		$data['page_name'] = $this->page_name;
@@ -31,15 +32,11 @@ class Shopping extends CI_Controller {
 
 	public function getitemsbycategoryid()
 	{
-		if(is_numeric($this->input->get('category_id'))) {
-			$items = $this->m_base->getListWhere(
-				'items',
-				array(
-					'category_id' => $this->input->get('category_id')
-				)
-			);
+		$category_id = $this->input->get('category_id');
+		if(is_numeric($category_id)) {
+			$items = $this->m_item->getitems($category_id);
 		} else {
-			$items = $this->m_base->getListWhere('items', array());
+			$items = $this->m_item->getitems();
 		}
 
 		echo json_encode($items);
