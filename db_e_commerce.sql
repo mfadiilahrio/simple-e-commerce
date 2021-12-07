@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2021 at 06:12 PM
+-- Generation Time: Dec 07, 2021 at 03:46 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -43,7 +43,8 @@ CREATE TABLE `auth` (
 
 INSERT INTO `auth` (`id`, `email`, `password`, `user_id`, `user_type`, `status`) VALUES
 (1, 'admin@admin.com', '5c90b96a75d4f9d5a1cfaa6f532afdc8', 1, 'admin', 1),
-(10, 'muhamadfrio@gmail.com', 'a5a2576f25e44aba47b6a3b2370cbae9', 11, 'customer', 1);
+(10, 'muhamadfrio@gmail.com', 'a5a2576f25e44aba47b6a3b2370cbae9', 11, 'customer', 1),
+(11, 'mfadilahrio@gmail.com', 'a5a2576f25e44aba47b6a3b2370cbae9', 12, 'customer', 1);
 
 -- --------------------------------------------------------
 
@@ -117,7 +118,8 @@ CREATE TABLE `bookings` (
 INSERT INTO `bookings` (`id`, `user_id`, `shop_id`, `complaint`, `date`, `address`, `phone`, `postal_code`, `other_cost`, `other_cost_note`, `booking_status`, `bank_account_id`, `awb_number`, `payment_url`, `created_at`) VALUES
 (1, 11, 1, NULL, '2021-11-30 21:35:38', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 0, NULL, 'completed', 2, 'AWB 1020980', 'assets/images/payments/payment_1.png', '2021-11-30 14:35:38'),
 (2, 11, 1, NULL, '2021-12-02 22:38:23', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 0, NULL, 'completed', 2, 'AWB 0980912', 'assets/images/payments/payment_2.png', '2021-12-02 15:38:23'),
-(3, 11, 1, NULL, '2021-12-02 22:41:57', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 10000, 'Biaya pengiriman', 'completed', 2, 'AWB 1098234908', 'assets/images/payments/payment_3.png', '2021-12-02 15:41:57');
+(3, 11, 1, NULL, '2021-12-02 22:41:57', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 10000, 'Biaya pengiriman', 'completed', 2, 'AWB 1098234908', 'assets/images/payments/payment_3.png', '2021-12-02 15:41:57'),
+(4, 11, 1, NULL, '2021-12-07 21:19:16', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', '0895-2903-7444', 17510, 0, '', 'completed', 2, '', 'assets/images/payments/payment_4.png', '2021-12-07 14:19:16');
 
 -- --------------------------------------------------------
 
@@ -140,7 +142,8 @@ CREATE TABLE `booking_items` (
 INSERT INTO `booking_items` (`id`, `booking_id`, `item_id`, `price`, `qty`) VALUES
 (1, 1, 19, 15000, 1),
 (2, 2, 19, 15000, 1),
-(3, 3, 19, 15000, 1);
+(3, 3, 19, 15000, 1),
+(4, 4, 19, 15000, 2);
 
 -- --------------------------------------------------------
 
@@ -181,7 +184,8 @@ CREATE TABLE `carts` (
 INSERT INTO `carts` (`id`, `user_id`, `status`) VALUES
 (9, 11, 0),
 (10, 11, 0),
-(11, 11, 1);
+(11, 11, 0),
+(12, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -203,7 +207,8 @@ CREATE TABLE `cart_items` (
 INSERT INTO `cart_items` (`id`, `cart_id`, `item_id`, `qty`) VALUES
 (16, 9, 19, 1),
 (17, 10, 19, 1),
-(18, 11, 19, 15);
+(18, 11, 19, 2),
+(19, 12, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -248,7 +253,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `brand_id`, `category_id`, `name`, `description`, `price`, `image_url`, `qty`, `status`) VALUES
-(19, 1, 1, 'Chicken Nugget', 'Champ chicken nugget 500gram. Produk ready, baru dan fresh setiap hari. Order dan jadwal pengiriman :\r\n- Order masuk pukul 18.00wib sd pukul 05.00wib. Paket akan dikirim dihari yang sama. Start pengiriman pukul 08.00wib\r\n- Order masuk pukul 06.00wib sd pukul 17.00wib. Paket akan dikirim ke esokan harinya Start pengiriman mulai pukul 08.00wib\r\n- Pengiriman setiap hari ( Senin - Minggu ) kecuali Toko tutup/ libur', 15000, 'assets/images/items/item_19.png', 15, 1);
+(19, 1, 1, 'Chicken Nugget', 'Champ chicken nugget 500gram. Produk ready, baru dan fresh setiap hari. Order dan jadwal pengiriman :\r\n- Order masuk pukul 18.00wib sd pukul 05.00wib. Paket akan dikirim dihari yang sama. Start pengiriman pukul 08.00wib\r\n- Order masuk pukul 06.00wib sd pukul 17.00wib. Paket akan dikirim ke esokan harinya Start pengiriman mulai pukul 08.00wib\r\n- Pengiriman setiap hari ( Senin - Minggu ) kecuali Toko tutup/ libur', 15000, 'assets/images/items/item_19.png', 13, 1);
 
 -- --------------------------------------------------------
 
@@ -292,7 +297,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `phone`, `address`, `postal_code`, `dob`) VALUES
 (1, 'Admin', '081111111111', 'Bekasi Utara', 17110, '1111-01-01'),
-(11, 'Rio', '0895-2903-7444', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', 17510, '1998-05-08');
+(11, 'Rio', '0895-2903-7444', 'Taman alamanda blok G11 No/29 RT 002 RW 022 Kec Tambun Utara Kab Bekasi', 17510, '1998-05-08'),
+(12, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -379,7 +385,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `auth`
 --
 ALTER TABLE `auth`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `banks`
@@ -397,13 +403,13 @@ ALTER TABLE `bank_accounts`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `booking_items`
 --
 ALTER TABLE `booking_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `brands`
@@ -415,13 +421,13 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -439,7 +445,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
