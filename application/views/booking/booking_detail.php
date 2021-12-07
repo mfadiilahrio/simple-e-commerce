@@ -72,7 +72,7 @@
               <div class="row">
                 <div class="col-12">
                   <h4>
-                    <i class="fas fa-globe"></i> E-commerce
+                    <i class="fas fa-globe"></i> Aurafoods Frozen
                     <small class="float-right">Tanggal: <?= $record->created_at ?></small>
                   </h4>
                 </div>
@@ -83,7 +83,7 @@
                 <div class="col-sm-4 invoice-col">
                   Dari
                   <address>
-                    <strong><?= 'E-commerce - '.$record->shop_name ?></strong><br>
+                    <strong><?= 'Aurafoods Frozen '.$record->shop_name ?></strong><br>
                     <?= $record->shop_address.', '.$record->shop_postal_code ?><br>
                     Phone: <?= $record->shop_phone ?><br>
                   </address>

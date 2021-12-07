@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="<?php echo base_url('assets/images/logo1.png'); ?>" rel="icon">
-  <title>E-commerce | Log in</title>
+  <title>Aurafoods Frozen | Log in</title>
 
 
   <!-- Google Font: Source Sans Pro -->
@@ -35,8 +35,8 @@
   <div class="card">
     <div class="card-body login-card-body">
       <div class="login-logo">
-        <img src="<?php echo base_url('assets/images/logo1.png'); ?>" height="50" /><br/>
-        <b>E-commerce</b>
+        <img src="<?php echo base_url('assets/images/logo1.png'); ?>" height="100" /><br/>
+        <b>Aurafoods Frozen</b>
       </div>
       <!-- /.login-logo -->
       <?php if($success != null) { echo "<p class='text text-success text-center'>".$success."</p>"; } ?>

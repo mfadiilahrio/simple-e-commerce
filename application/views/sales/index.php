@@ -87,8 +87,9 @@
                         <th>ID</th>
                         <th>Customer</th>
                         <th>Tanggal</th>
+                        <th>Subtotal</th>
                         <th>Biaya Tambahan</th>
-                        <th>Total</th>
+                        <th>Grand Total</th>
                         <th>Status</th>
                         <th>Rekening</th>
                       </tr>
@@ -112,8 +113,9 @@
                           <td><?= $record->id ?></td>
                           <td><?= $record->user_name ?></td>
                           <td><?= $record->date ?></td>
+                          <td><?= "Rp " . number_format($record->subtotal, 0, ",", ".") ?></td>
                           <td><?= "Rp " . number_format($record->other_cost, 0, ",", ".") ?></td>
-                          <td><?= "Rp " . number_format($record->total, 0, ",", ".") ?></td>
+                          <td><?= "Rp " . number_format($record->grand_total, 0, ",", ".") ?></td>
                           <td><span class="badge badge-<?= $color ?>"><?= $record->booking_status_name ?></span></td>
                           <td><?= "$record->bank_name - $record->account_number" ?></td>
                         </tr>

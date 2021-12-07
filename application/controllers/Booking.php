@@ -147,7 +147,7 @@ class Booking extends CI_Controller {
 				} else if ($booking_status == 'waiting_payment') {
 					$data = array(
 						'booking_status' => $booking_status,
-						'other_cost' => $other_cost,
+						'other_cost' => (is_numeric($other_cost)) ? $other_cost : 0,
 						'other_cost_note' => $other_cost_note
 					);	
 				} else if ($booking_status == 'process' || $booking_status == 'completed' || $booking_status == 'canceled') {

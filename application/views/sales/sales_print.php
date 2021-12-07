@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>E-commerce Admin</title>
+  <title>Aurafoods Frozen</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -32,8 +32,9 @@
               <th>No</th>
               <th>ID</th>
               <th>Tanggal</th>
+              <th>Subtotal</th>
               <th>Biaya Tambahan</th>
-              <th>Total</th>
+              <th>Grand Total</th>
               <th>Rekening</th>
             </tr>
           </thead>
@@ -55,8 +56,9 @@
               <td><?= $no; ?></td>
               <td><?= $record->id ?></td>
               <td><?= $record->date ?></td>
+              <td><?= "Rp " . number_format($record->subtotal, 0, ",", ".") ?></td>
               <td><?= "Rp " . number_format($record->other_cost, 0, ",", ".") ?></td>
-              <td><?= "Rp " . number_format($record->total, 0, ",", ".") ?></td>
+              <td><?= "Rp " . number_format($record->grand_total, 0, ",", ".") ?></td>
               <td><?= "$record->bank_name - $record->account_number" ?></td>
             </tr>
             <?php $no++; } ?>

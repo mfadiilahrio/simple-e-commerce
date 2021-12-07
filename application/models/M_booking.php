@@ -40,7 +40,8 @@ class M_booking extends CI_Model {
 			shops.postal_code as shop_postal_code,
 			banks.name as bank_name,
 			bank_accounts.account_number,
-			(SELECT SUM(booking_items.price * booking_items.qty) FROM booking_items WHERE booking_items.booking_id = bookings.id) + bookings.other_cost as total');
+			(SELECT SUM(booking_items.price * booking_items.qty) FROM booking_items WHERE booking_items.booking_id = bookings.id) as subtotal,
+			(SELECT SUM(booking_items.price * booking_items.qty) FROM booking_items WHERE booking_items.booking_id = bookings.id) + bookings.other_cost as grand_total');
 		$this->db->join('users u', 'u.id = bookings.user_id', 'left');
 		$this->db->join('auth', 'auth.user_id = u.id', 'left');
 		$this->db->join('shops', 'shops.id = bookings.shop_id', 'left');

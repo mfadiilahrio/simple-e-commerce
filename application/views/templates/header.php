@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="<?php echo base_url('assets/images/logo1.png'); ?>" rel="icon">
-  <title>E-commerce | <?= ucwords($this->session->userdata('user_type')) ?></title>
+  <title>Aurafoods Frozen | <?= ucwords($this->session->userdata('user_type')) ?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -167,7 +167,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="<?= base_url('assets/dist/img/AdminLTELogo.png'); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">E-commerce</span>
+      <span class="brand-text font-weight-light">Aurafoods Frozen</span>
     </a>
 
     <!-- Sidebar -->
@@ -237,7 +237,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="https://api.whatsapp.com/send?phone=+6282125207042" class="nav-link" target="_blank">
+                <a href="https://api.whatsapp.com/send?phone=+6282119109559" class="nav-link" target="_blank">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Hubungi CS</p>
                 </a>
